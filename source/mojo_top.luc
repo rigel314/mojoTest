@@ -1,0 +1,185 @@
+module mojo_top (
+    input clk,              // 50MHz clock
+    input rst_n,            // reset button (active low)
+    output led [8],         // 8 user controllable LEDs
+    input cclk,             // configuration clock, AVR ready when high
+    output spi_miso,        // AVR SPI MISO
+    input spi_ss,           // AVR SPI Slave Select
+    input spi_mosi,         // AVR SPI MOSI
+    input spi_sck,          // AVR SPI Clock
+    output spi_channel [4], // AVR general purpose pins (used by default to select ADC channel)
+    input avr_tx,           // AVR TX (FPGA RX)
+    output avr_rx,          // AVR RX (FPGA TX)
+    input avr_rx_busy,      // AVR RX buffer full
+    output mir_tx,          // MIR TX (FPGA RX)
+    output mir_rx           // MIR RX (FPGA TX)
+  ) {
+  
+  sig c10M;
+  sig c50M;
+  sig c100M;
+  sig c250M;
+  
+  clk_wiz clk_wiz;
+  always {
+    clk_wiz.CLK_IN = clk;
+    c50M = clk_wiz.CLK_OUT1;
+    c10M = clk_wiz.CLK_OUT2;
+    c250M = clk_wiz.CLK_OUT3;
+    c100M = clk_wiz.CLK_OUT4;
+  }
+  
+  sig rst;                  // reset signal
+  sig rx;
+  sig tx;
+  sig pnNext;
+  sig seed[32];
+  
+  .clk(c50M) {
+    // The reset conditioner is used to synchronize the reset signal to the FPGA
+    // clock. This ensures the entire FPGA comes out of reset at the same time.
+    reset_conditioner reset_cond;
+
+    dff ledctr[32];   // counter
+    dff lastLpfCtr[3];
+    dff lastutx;
+
+    .rst(rst) {
+      avr_interface avr;
+      reg_interface_debug reg;
+    }
+  }
+
+  .clk(c250M) {
+    fsm lpfState = {IDLE, SET};
+    dff lpfctr[3];   // counter
+    pn_gen pn(.seed(seed), .next(pnNext), .rst(rst));
+    dff lpfVal[32];
+  }
+
+  .clk(c10M) {
+    dff semStatus[4];
+  }
+  
+  sig icap_busy, icap_rw, icap_cs, icap_i[16], icap_o[16];
+  sig st_hb, st_init, st_ob, st_uncorr;
+  semIP semIP_inst(.monitor_txfull(0), .monitor_rxempty(1), .monitor_rxdata(h00), 
+    .inject_strobe(0), .inject_address(h000000000),
+    .icap_busy(icap_busy), .icap_clk(c10M), .icap_grant(1), .icap_o(icap_o));
+  icap icap_inst(.CLK(c10M), .CE(icap_cs), .WRITE(icap_rw), .I(icap_i));
+  
+  sig lpfInData[16], lpfInValid;
+  lpfTest lpfTest(.aclk(c250M), .s_axis_data_tdata(lpfInData), .s_axis_data_tvalid(lpfInValid));
+  
+  microblaze_mcs_v1_4 uBlaze(.Reset(rst), .IO_Ready(b0), .IO_Read_Data(32h00000000), .UART_Rx(b0));
+  always {
+    uBlaze.Clk = c100M;
+    lastutx.d = uBlaze.UART_Tx;
+  }
+  
+  always {
+    if(lpfTest.m_axis_data_tvalid)
+      lpfVal.d = lpfTest.m_axis_data_tdata;
+
+    lpfInValid = 0;
+    pnNext = 0;
+        
+    case (lpfState.q) {
+      lpfState.IDLE:
+        led[7:6] = 2b01;
+        lpfctr.d = lpfctr.q + 1;
+        if(lpfctr.q == 3) { // I want to be in SET 1 out of every 5 cycles, stay here for 4, go to SET for 1.
+          lpfState.d = lpfState.SET;
+          pnNext = 1;
+        }
+        
+      lpfState.SET:
+        led[7:6] = 2b10;
+        lpfctr.d = 0;
+        if(lpfTest.s_axis_data_tready) { // This should be ready because I'm not putting in data too fast.
+          lpfInData = pn.num[15:0];
+          lpfInValid = 1;
+          lpfState.d = lpfState.IDLE;
+        }
+    }
+  }
+  
+  always {
+    lastLpfCtr.d = lpfctr.q;
+  }
+  
+  always {
+    reset_cond.in = ~rst_n; // input raw inverted reset signal
+    rst = reset_cond.out;   // conditioned reset
+    
+    tx = avr_tx;
+    
+    // connect inputs of avr
+    avr.cclk = cclk;
+    avr.spi_ss = spi_ss;
+    avr.spi_mosi = spi_mosi;
+    avr.spi_sck = spi_sck;
+    avr.rx = tx;
+    avr.channel = hf;           // ADC is unused so disable
+    avr.tx_block = avr_rx_busy; // block TX when AVR is busy
+     
+    // connect outputs of avr
+    spi_miso = avr.spi_miso;
+    spi_channel = avr.spi_channel;
+    rx = avr.tx;
+    
+    // connect reg interface to avr interface
+    reg.rx_data = avr.rx_data;
+    reg.new_rx_data = avr.new_rx_data;
+    avr.tx_data = reg.tx_data;
+    avr.new_tx_data = reg.new_tx_data;
+    reg.tx_busy = avr.tx_busy;
+    
+    reg.regIn.drdy = 0;                   // default to not ready
+    reg.regIn.data = 32bx;                // don't care
+    
+    avr_rx = rx;
+    mir_rx = rx;
+    mir_tx = tx;
+    
+    if (reg.regOut.new_cmd) {             // new command
+      if (reg.regOut.write) {             // if write
+        if (reg.regOut.address == 0) {    // if address is 0
+          seed = reg.regOut.data;  // write the LEDs
+        }
+      } else {                            // if read
+        if (reg.regOut.address == 0) {    // if address is 0
+          reg.regIn.data = lpfVal.q;        // read the LEDs
+          //reg.regIn.data = 32hC0D4;        // read the LEDs
+          reg.regIn.drdy = 1;             // signal data ready
+        }
+      }
+    }
+    
+    reg.debug = c{lastutx.q, semStatus.q, lastLpfCtr.q};
+    //reg.debug = c{b0, b0, b0, b0, lpfctr.q};
+    //reg.debug = 8h00;
+  }
+  
+  always {
+    icap_rw = semIP_inst.icap_rdwrb;
+    icap_cs = semIP_inst.icap_csb;
+    icap_i = semIP_inst.icap_i;
+    icap_o = icap_inst.O;
+    icap_busy = icap_inst.BUSY;
+    
+    st_hb = semIP_inst.status_heartbeat;
+    st_init = semIP_inst.status_initialization;
+    st_ob = semIP_inst.status_observation;
+    st_uncorr = semIP_inst.status_uncorrectable;
+    
+    semStatus.d = c{st_hb, st_init, st_ob, st_uncorr};
+  }
+  
+  always {
+    ledctr.d = ledctr.q + 1;
+  }
+  always {
+    led[5:0] = ledctr.q[26+:6];
+  }
+}

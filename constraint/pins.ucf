@@ -1,0 +1,2 @@
+NET "mir_tx" LOC = P66 | IOSTANDARD = LVTTL;
+NET "mir_rx" LOC = P67 | IOSTANDARD = LVTTL;

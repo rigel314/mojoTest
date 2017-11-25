@@ -1,0 +1,12 @@
+# Output products list for <semIP>
+semIP/doc/pg036_sem.pdf
+semIP/sem_v3_6_readme.txt
+semIP.asy
+semIP.gise
+semIP.ngc
+semIP.v
+semIP.veo
+semIP.xco
+semIP.xise
+semIP_flist.txt
+semIP_xmdf.tcl

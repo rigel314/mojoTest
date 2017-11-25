@@ -1,0 +1,19 @@
+# Output products list for <lpfTest>
+demo_tb/tb_lpfTest.vhd
+lpfTest/cmodel/fir_compiler_v6_3_bitacc_cmodel_lin.zip
+lpfTest/cmodel/fir_compiler_v6_3_bitacc_cmodel_lin64.zip
+lpfTest/cmodel/fir_compiler_v6_3_bitacc_cmodel_nt.zip
+lpfTest/cmodel/fir_compiler_v6_3_bitacc_cmodel_nt64.zip
+lpfTest/doc/ds795_fir_compiler.pdf
+lpfTest/doc/fir_compiler_v6_3_readme.txt
+lpfTest/doc/fir_compiler_v6_3_vinfo.html
+lpfTest.asy
+lpfTest.gise
+lpfTest.mif
+lpfTest.ngc
+lpfTest.v
+lpfTest.veo
+lpfTest.xco
+lpfTest.xise
+lpfTest_flist.txt
+lpfTest_xmdf.tcl

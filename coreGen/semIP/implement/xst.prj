@@ -1,0 +1,7 @@
+verilog work "../example_design/semIP_sem_example.v"
+verilog work "../example_design/semIP_sem_cfg.v"
+verilog work "../example_design/semIP_sem_mon.v"
+verilog work "../example_design/semIP_sem_mon_fifo.v"
+verilog work "../example_design/semIP_sem_mon_piso.v"
+verilog work "../example_design/semIP_sem_mon_sipo.v"
+verilog work "../../semIP.v"
