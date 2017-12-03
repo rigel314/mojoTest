@@ -12,7 +12,13 @@ module mojo_top (
     output avr_rx,          // AVR RX (FPGA TX)
     input avr_rx_busy,      // AVR RX buffer full
     output mir_tx,          // MIR TX (FPGA RX)
-    output mir_rx           // MIR RX (FPGA TX)
+    output mir_rx,          // MIR RX (FPGA TX)
+    output scrn_backlight,  //
+    output scrn_sclk,       //
+    output scrn_mosi,       //
+    output scrn_dc,         //
+    output scrn_rst,        //
+    output scrn_sce         //
   ) {
   
   sig c10M;
@@ -59,6 +65,7 @@ module mojo_top (
 
   .clk(c10M) {
     dff semStatus[4];
+    life life(#CLK_FREQ(10000000), .rst(rst));
   }
   
   sig icap_busy, icap_rw, icap_cs, icap_i[16], icap_o[16];
@@ -75,6 +82,15 @@ module mojo_top (
   always {
     uBlaze.Clk = c100M;
     lastutx.d = uBlaze.UART_Tx;
+  }
+  
+  always {
+    scrn_backlight = 0;
+    scrn_sclk = life.sclk;
+    scrn_mosi = life.mosi;
+    scrn_dc = life.dc;
+    scrn_rst = life.res;
+    scrn_sce = life.sce;
   }
   
   always {
