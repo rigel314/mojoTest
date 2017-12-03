@@ -35,6 +35,9 @@
     <core name="clk_wiz">
       <src>clk_wiz.v</src>
     </core>
+    <core name="screenBuf">
+      <src>screenBuf.v</src>
+    </core>
     <core name="screenfifo">
       <src>screenfifo.v</src>
       <src>screenfifo.ngc</src>

@@ -49,11 +49,14 @@ module mojo_top (
     dff ledctr[32];   // counter
     dff lastLpfCtr[3];
     dff lastutx;
+    dff scrnBLctr[16];
+    dff scrnBLmax[16];
 
     .rst(rst) {
       avr_interface avr;
       reg_interface_debug reg;
     }
+    life life(#CLK_FREQ(50000000), .rst(rst));
   }
 
   .clk(c250M) {
@@ -65,7 +68,6 @@ module mojo_top (
 
   .clk(c10M) {
     dff semStatus[4];
-    life life(#CLK_FREQ(10000000), .rst(rst));
   }
   
   sig icap_busy, icap_rw, icap_cs, icap_i[16], icap_o[16];
@@ -85,7 +87,6 @@ module mojo_top (
   }
   
   always {
-    scrn_backlight = 0;
     scrn_sclk = life.sclk;
     scrn_mosi = life.mosi;
     scrn_dc = life.dc;
@@ -158,16 +159,29 @@ module mojo_top (
     mir_rx = rx;
     mir_tx = tx;
     
+    scrnBLctr.d = scrnBLctr.q + 1;
+    if (scrnBLctr.q < scrnBLmax.q)
+      scrn_backlight = b1;
+    else
+      scrn_backlight = b0;
+    
     if (reg.regOut.new_cmd) {             // new command
       if (reg.regOut.write) {             // if write
         if (reg.regOut.address == 0) {    // if address is 0
           seed = reg.regOut.data;  // write the LEDs
+        }
+        if (reg.regOut.address == 1) {
+          scrnBLmax.d = reg.regOut.data[15:0];
         }
       } else {                            // if read
         if (reg.regOut.address == 0) {    // if address is 0
           reg.regIn.data = lpfVal.q;        // read the LEDs
           //reg.regIn.data = 32hC0D4;        // read the LEDs
           reg.regIn.drdy = 1;             // signal data ready
+        }
+        if (reg.regOut.address == 1) {
+          reg.regIn.data = c{16h0000, scrnBLmax.q};
+          reg.regIn.drdy = 1;
         }
       }
     }

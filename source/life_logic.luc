@@ -1,8 +1,13 @@
-// +--------------+         +----------+
-// |              |-------->| Buffer 1 |-------+
-// |              |         +----------+       V
-// |              |          buffer selct   +----------------------------+     +------+
-// | Calculations |<------------------------| Buffer Controller / Sender |---->| fifo |
+//                           +------+
+//                           | Init |---------------+
+//                           +------+               |
+//                              |                   |
+//                              V                   |
+// +--------------+         +----------+            |
+// |              |-------->| Buffer 1 |-------+    |
+// |              |         +----------+       V    V
+// |              |        buffer select    +----------------------------+     +------+
+// | Calculations |<----------------------->| Buffer Controller / Sender |---->| fifo |
 // |              |                         +----------------------------+     +------+
 // |              |         +----------+       ^            ^
 // |              |-------->| Buffer 2 |-------+            +------init_done
@@ -11,9 +16,123 @@
 module life_logic (
     input clk,  // clock
     input rst,  // reset
-    input init_done
+    input init_done,
+    input wr_full,
+    output wr_valid,
+    output fifoIn[9]
   ) {
 
+  .clk(clk) {
+    .rst(rst) {
+      dff bufferSel[2]; // Refers to the buffer currently being read&sent to fifo, 0 - calculation should wait; 1,2 - buf1/buf2
+      dff prevBufSel[2];
+      dff bufferSendCtr[9];
+      dff calcAddr[9];
+      dff sendAddr[9];
+      dff calcDone; // Signals to sender that calculations are done
+      fsm calcstate = {INIT, CALC, WAIT};
+      fsm sendstate = {INIT, SEND};
+    }
+  }
+
+  screenBuf buf1(.clka(clk), .clkb(clk));
+  screenBuf buf2(.clka(clk), .clkb(clk));
+  
+  // Calc loop
   always {
+    buf1.wea = 0;
+    buf2.wea = 0;
+    buf1.dina = 8hxx;
+    buf2.dina = 8hxx;
+    buf1.addra = calcAddr.q;
+    buf2.addra = calcAddr.q;
+    calcDone.d = 0;
+    prevBufSel.d = bufferSel.q;
+
+    if(init_done) {
+      case(calcstate.q) {
+        calcstate.INIT: // Wait for a valid buffer
+          if(bufferSel.q != 0)
+            calcstate.d = calcstate.CALC;
+        
+        calcstate.CALC:
+          if(bufferSel.q == 2) {
+            buf1.wea = 1;
+            buf1.addra = 0;
+          }
+          else {
+            buf2.wea = 1;
+            buf2.addra = 0;
+          }
+          calcstate.d = calcstate.WAIT;
+          
+        calcstate.WAIT:
+          calcDone.d = 1;
+          if(prevBufSel.q != bufferSel.q) {
+            calcstate.d = calcstate.CALC;
+          }
+      }
+    }
+  }
+  
+  // Sender loop
+  always {
+    buf1.web = 0;
+    buf2.web = 0;
+    buf1.dinb = 8hxx;
+    buf2.dinb = 8hxx;
+    buf1.addrb = sendAddr.q;
+    buf2.addrb = sendAddr.q;
+    wr_valid = 0;
+    fifoIn = 9bxxxxxxxxx;
+    bufferSendCtr.d = bufferSendCtr.q + 1;
+    buf1.addrb = bufferSendCtr.q;
+    buf2.addrb = bufferSendCtr.q;
+    
+    case(sendstate.q) {
+      sendstate.INIT:
+        if(bufferSendCtr.q < 504) {
+          buf1.web = 1;
+          buf1.dinb = 8h01; // Initialize to all 8b00000001's for now
+        }
+        else {
+          if(init_done) {
+            bufferSendCtr.d = 0;
+            bufferSel.d = 1;
+            sendstate.d = sendstate.SEND;
+          }
+          else {
+            bufferSendCtr.d = 504; // Wait until init_done is true
+          }
+        }
+        
+      sendstate.SEND:
+        if(!wr_full) {
+          if(bufferSendCtr.q <= 504 && bufferSendCtr.q != 0) {
+            wr_valid = 1;
+            if(bufferSel.q == 1) {
+              fifoIn = c{1b1, buf1.doutb}; // will be the value from previous cycle's address
+            }
+            if(bufferSel.q == 2) {
+              fifoIn = c{1b1, buf2.doutb}; // will be the value from previous cycle's address
+            }
+          }
+          if(bufferSendCtr.q > 504) {
+            if(calcDone.q) {
+              bufferSendCtr.d = 0;
+              if(bufferSel.q == 1)
+                bufferSel.d = 2;
+              else
+                bufferSel.d = 1;
+            }
+            else {
+              bufferSendCtr.d = 505; // Should never happen because the calculation loop should be much faster than the serial comms
+            }
+          }
+        }
+        else { // fifo full, stop counting
+          bufferSendCtr.d = bufferSendCtr.q;
+        }
+    }
   }
 }

@@ -13,8 +13,8 @@ module life_init #(
     .rst(rst) {
       dff cmdctr[9];
       dff timectr[$clog2(CLK_FREQ/1000*250+1)];
-      fsm state = {SET_HOME, CLEAR_SCRN, SETTINGS, WHITE_SCRN, WAIT1, BLACK_SCRN, WAIT2, NORMAL_SCRN, DONE};
-      // fsm laststate = {SET_HOME, CLEAR_SCRN, SETTINGS, WHITE_SCRN, WAIT1, BLACK_SCRN, WAIT2, NORMAL_SCRN, DONE};
+      fsm state = {SET_HOME, CLEAR_SCRN, SETTINGS, WHITE_SCRN, WAIT1, BLACK_SCRN, WAIT2, NORMAL_SCRN, SCRN_DATA, DONE};
+      // fsm laststate = {SET_HOME, CLEAR_SCRN, SETTINGS, WHITE_SCRN, WAIT1, BLACK_SCRN, WAIT2, NORMAL_SCRN, SCRN_DATA, DONE};
     }
   }
   
@@ -105,7 +105,18 @@ module life_init #(
           state.NORMAL_SCRN:
             fifoIn = c{1b0, 8h0C}; // Normal screen
             wr_valid = 1;
-            state.d = state.DONE;
+            state.d = state.SCRN_DATA;
+            
+          state.SCRN_DATA:
+            cmdctr.d = cmdctr.q + 1;
+            if(cmdctr.q < 504) {
+              fifoIn = c{1b1, 8h00};
+              wr_valid = 1;
+            }
+            else {
+              cmdctr.d = 0;
+              state.d = state.DONE;
+            }
         }
       }
       else {
