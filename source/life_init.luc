@@ -1,0 +1,116 @@
+module life_init #(
+  CLK_FREQ = 50000000 : CLK_FREQ > 0 // clock frequency
+  )(
+    input clk,  // clock
+    input rst,  // reset
+    input wr_full,
+    output wr_valid,
+    output fifoIn[9],
+    output done
+  ) {
+
+  .clk(clk) {
+    .rst(rst) {
+      dff cmdctr[9];
+      dff timectr[$clog2(CLK_FREQ/1000*250+1)];
+      fsm state = {SET_HOME, CLEAR_SCRN, SETTINGS, WHITE_SCRN, WAIT1, BLACK_SCRN, WAIT2, NORMAL_SCRN, DONE};
+      // fsm laststate = {SET_HOME, CLEAR_SCRN, SETTINGS, WHITE_SCRN, WAIT1, BLACK_SCRN, WAIT2, NORMAL_SCRN, DONE};
+    }
+  }
+  
+  always {
+    cmdctr.d = 0;
+    timectr.d = 0;
+    done = 0;
+    wr_valid = 0;
+    fifoIn = 9bx;
+    // laststate.d = state.q;
+    if(state.q == state.DONE) {
+      done = 1;
+      wr_valid = 1b0;
+      fifoIn = 9bx;
+    }
+    else {
+      if(!wr_full) {
+        case(state.q) {
+          state.SET_HOME:
+            cmdctr.d = cmdctr.q + 1;
+            if(cmdctr.q == 0)
+              fifoIn = c{1b0, 8h20}; // Normal commands
+            if(cmdctr.q == 1)
+              fifoIn = c{1b0, 8h80}; // X => 0
+            if(cmdctr.q == 2)
+              fifoIn = c{1b0, 8h40}; // Y => 0
+            if(cmdctr.q < 3)
+              wr_valid = 1;
+            if(cmdctr.q == 3) {
+              cmdctr.d = 0;
+              state.d = state.CLEAR_SCRN;
+            }
+    
+          state.CLEAR_SCRN:
+            cmdctr.d = cmdctr.q + 1;
+            if(cmdctr.q < 504) {
+              fifoIn = c{1b1, 8h00};
+              wr_valid = 1;
+            }
+            else {
+              cmdctr.d = 0;
+              state.d = state.SETTINGS;
+            }
+    
+          state.SETTINGS:
+            cmdctr.d = cmdctr.q + 1;
+            if(cmdctr.q == 0)
+              fifoIn = c{1b0, 8h21}; // Extended commands
+            if(cmdctr.q == 1)
+              fifoIn = c{1b0, 8hC0}; // Set contrast
+            if(cmdctr.q == 2)
+              fifoIn = c{1b0, 8h04}; // Temperature coefficient
+            if(cmdctr.q == 3)
+              fifoIn = c{1b0, 8h13}; // Bias mode 1:48
+            if(cmdctr.q == 4)
+              fifoIn = c{1b0, 8h20}; // Normal commands
+            if(cmdctr.q < 5)
+              wr_valid = 1;
+            if(cmdctr.q == 5) {
+              cmdctr.d = 0;
+              state.d = state.WHITE_SCRN;
+            }
+    
+          state.WHITE_SCRN:
+            fifoIn = c{1b0, 8h08}; // White screen
+            wr_valid = 1;
+            state.d = state.WAIT1;
+    
+          state.WAIT1:
+            timectr.d = timectr.q + 1;
+            if(timectr.q == CLK_FREQ/1000*250) {
+              timectr.d = 0;
+              state.d = state.BLACK_SCRN;
+            }
+    
+          state.BLACK_SCRN:
+            fifoIn = c{1b0, 8h09}; // Black screen
+            wr_valid = 1;
+            state.d = state.WAIT2;
+    
+          state.WAIT2:
+            timectr.d = timectr.q + 1;
+            if(timectr.q == CLK_FREQ/1000*250) {
+              timectr.d = 0;
+              state.d = state.NORMAL_SCRN;
+            }
+    
+          state.NORMAL_SCRN:
+            fifoIn = c{1b0, 8h0C}; // Normal screen
+            wr_valid = 1;
+            state.d = state.DONE;
+        }
+      }
+      else {
+        cmdctr.d = cmdctr.q;
+      }
+    }
+  }
+}

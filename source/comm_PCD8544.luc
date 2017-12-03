@@ -1,0 +1,112 @@
+module comm_PCD8544 #(
+    BAUD_CYCLES = 50
+  )(
+    input clk,          // clock
+    input rst,          // reset
+    input rd_valid,     // data good from fifo
+    input rd_empty,     // empty signal from fifo
+    input fifoOut[9],   // data from fifo
+    output rd_ready,    // command to signal fifo we want to read
+    output sce,         // !SCE - Serial Enable
+    output dc,          // D/!C - data or command
+    output res,         // !RES - reset to inturrupt current transfer
+    output sclk,        // SCLK - clock
+    output mosi         // SDIN - serial data (changes on falling edge of SCLK)
+  ) {
+
+  .clk(clk) {
+    .rst(rst) {
+      dff baudCtr[$clog2(BAUD_CYCLES+1)];
+      dff sclkval(#INIT(1));
+      dff sceval(#INIT(1));
+      dff databuf[9];
+      dff bitCtr[4];
+      fsm state = {INIT, IDLE, READ, SETSCE, SEND};
+      fsm laststate = {INIT, IDLE, READ, SETSCE, SEND};
+    }
+  }
+  
+  always {
+    baudCtr.d = baudCtr.q + 1;
+    bitCtr.d = 0;
+    rd_ready = 0;
+    
+    res = 1; // High is working
+    sce = sceval.q; // Low is "care about clock pulses"
+    dc = 0; // Low is command, high is data
+    sclk = sclkval.q;
+    mosi = databuf.q[7];
+    
+    laststate.d = state.q;
+    
+    case(state.q) {
+      state.INIT:
+        if(baudCtr.q < BAUD_CYCLES / 2)
+          res = 0;
+        if(baudCtr.q == BAUD_CYCLES)
+          state.d = state.IDLE;
+      
+      state.IDLE:
+        baudCtr.d = 0;
+        sceval.d = 1;
+        if(!rd_empty)
+          state.d = state.READ;
+        
+      state.READ:
+        baudCtr.d = 0;
+        if(laststate.q != state.q) // Only set rd_ready once
+          rd_ready = 1;
+        if(rd_valid) {
+          if(sceval.q)
+            state.d = state.SETSCE;
+          else
+            state.d = state.SEND;
+          databuf.d = fifoOut;
+        }
+
+      state.SETSCE:
+        sceval.d = 0;
+        if(baudCtr.q == BAUD_CYCLES) {
+          baudCtr.d = 0;
+          state.d = state.SEND;
+        }
+                
+      state.SEND:
+        sclk = sclkval.q;
+        // mosi = databuf.q[7];
+        dc = databuf.q[8];
+        bitCtr.d = bitCtr.q;
+        
+        if(laststate.q != state.q) {
+          sclkval.d = 0;
+        }
+        
+        if(baudCtr.q == BAUD_CYCLES) {
+          sclkval.d = !sclkval.q;
+          baudCtr.d = 0;
+          if(sclkval.q == b1) { // If this is a falling edge, update data
+            databuf.d = c{databuf.q[8], databuf.q[6:0], b0};
+            bitCtr.d = bitCtr.q + 1;
+            if(bitCtr.q == 7) {
+              sclkval.d = 1;
+              if(!rd_empty)
+                state.d = state.READ;
+              else
+                state.d = state.IDLE;
+            }
+          }
+        }
+    }
+  }
+  
+//  always {
+//    sclk = sclkval.q;
+//    mosi = databuf.q[7];
+//    if(baudCtr.q == BAUD_CYCLES) {
+//      sclkval.d = !sclkval.q;
+//      if(sclkval.q == b1) {
+//        databuf.d = c{databuf.q[6:0], b0};
+//      }
+//    }
+//  }
+}

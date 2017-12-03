@@ -1,2 +1,9 @@
 NET "mir_tx" LOC = P66 | IOSTANDARD = LVTTL;
 NET "mir_rx" LOC = P67 | IOSTANDARD = LVTTL;
+
+NET "scrn_backlight" LOC = P118 | IOSTANDARD = LVTTL;
+NET "scrn_sclk" LOC = P116 | IOSTANDARD = LVTTL;
+NET "scrn_mosi" LOC = P114 | IOSTANDARD = LVTTL;
+NET "scrn_dc" LOC = P111 | IOSTANDARD = LVTTL;
+NET "scrn_rst" LOC = P104 | IOSTANDARD = LVTTL;
+NET "scrn_sce" LOC = P101 | IOSTANDARD = LVTTL;

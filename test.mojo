@@ -2,7 +2,11 @@
 <project name="test" board="Mojo V3" language="Lucid">
   <files>
     <src top="true">mojo_top.luc</src>
+    <src>life.luc</src>
     <src>icap.v</src>
+    <src>life_logic.luc</src>
+    <src>comm_PCD8544.luc</src>
+    <src>life_init.luc</src>
     <ucf lib="true">mojo.ucf</ucf>
     <ucf>pins.ucf</ucf>
     <component>reg_interface_debug.luc</component>
@@ -30,6 +34,10 @@
     </core>
     <core name="clk_wiz">
       <src>clk_wiz.v</src>
+    </core>
+    <core name="screenfifo">
+      <src>screenfifo.v</src>
+      <src>screenfifo.ngc</src>
     </core>
   </files>
 </project>

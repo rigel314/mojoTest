@@ -1,0 +1,63 @@
+// +------+
+// | Init |--------+
+// +------+        |
+//    |            v
+//    |done    +------+      +-----+
+//    |flag    | fifo |----->| SPI |
+//    |        +------+      +-----+
+//    v            ^
+// +-------+       |
+// | Logic |-------+
+// +-------+
+
+module life #(
+  CLK_FREQ = 50000000 : CLK_FREQ > 0 // clock frequency
+  )(
+    input clk,  // clock
+    input rst,   // reset
+    output sce,         // !SCE - Serial Enable
+    output dc,          // D/!C - data or command
+    output res,         // !RES - reset to inturrupt current transfer
+    output sclk,        // SCLK - clock
+    output mosi,        // SDIN - serial data (changes on falling edge of SCLK)
+    output running // flag to read in top
+  ) {
+
+  sig wr_valid, rd_ready, rd_valid, fifoIn[9], fifoOut[9], wr_full, rd_empty;
+  sig init_done;
+  .rst(rst) {
+    screenfifo fifo(.wr_clk(clk), .rd_clk(clk), .wr_en(wr_valid), .rd_en(rd_ready), .din(fifoIn));
+    .clk(clk) {
+      life_init life_init(#CLK_FREQ(CLK_FREQ), .wr_full(wr_full));
+      life_logic life_logic(.init_done(init_done));
+      comm_PCD8544 comm_screen(.fifoOut(fifoOut), .rd_empty(rd_empty), .rd_valid(rd_valid));
+    }
+  }
+  
+  always {
+    rd_valid = fifo.valid;
+    fifoOut = fifo.dout;
+    wr_full = fifo.full;
+    rd_empty = fifo.empty;
+    
+    sce = comm_screen.sce;
+    dc = comm_screen.dc;
+    res = comm_screen.res;
+    sclk = comm_screen.sclk;
+    mosi = comm_screen.mosi;
+    
+    rd_ready = comm_screen.rd_ready;
+    
+    init_done = life_init.done;
+    if(!init_done) {
+      running = 0;
+      wr_valid = life_init.wr_valid;
+      fifoIn = life_init.fifoIn;
+    }
+    else {
+      running = 1;
+      wr_valid = 0;
+      fifoIn = 9bxxxxxxxxx;
+    }
+  }
+}
