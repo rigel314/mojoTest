@@ -64,7 +64,7 @@ module life_init #(
             if(cmdctr.q == 0)
               fifoIn = c{1b0, 8h21}; // Extended commands
             if(cmdctr.q == 1)
-              fifoIn = c{1b0, 8hC0}; // Set contrast
+              fifoIn = c{1b0, 8hC8}; // Set contrast
             if(cmdctr.q == 2)
               fifoIn = c{1b0, 8h04}; // Temperature coefficient
             if(cmdctr.q == 3)

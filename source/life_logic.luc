@@ -30,8 +30,8 @@ module life_logic (
       dff calcAddr[9];
       dff sendAddr[9];
       dff calcDone; // Signals to sender that calculations are done
-      fsm calcstate = {INIT, CALC, WAIT};
-      fsm sendstate = {INIT, SEND};
+      fsm calcstate = {INIT, LINEBEGIN, READ, CALC, WAIT};
+      fsm sendstate = {INIT, SEND_XYPOS, SEND, FPS};
     }
   }
 
@@ -53,7 +53,13 @@ module life_logic (
       case(calcstate.q) {
         calcstate.INIT: // Wait for a valid buffer
           if(bufferSel.q != 0)
-            calcstate.d = calcstate.CALC;
+            calcstate.d = calcstate.LINEBEGIN;
+          
+        calcstate.LINEBEGIN:
+          calcstate.d = calcstate.READ;
+          
+        calcstate.READ:
+          calcstate.d = calcstate.CALC;
         
         calcstate.CALC:
           if(bufferSel.q == 2) {
@@ -106,6 +112,25 @@ module life_logic (
           }
         }
         
+      sendstate.SEND_XYPOS:
+        if(!wr_full) {
+          if(bufferSendCtr.q == 0)
+            fifoIn = c{1b0, 8h20}; // Normal commands
+          if(bufferSendCtr.q == 1)
+            fifoIn = c{1b0, 8h80}; // X => 0
+          if(bufferSendCtr.q == 2)
+            fifoIn = c{1b0, 8h40}; // Y => 0
+          if(bufferSendCtr.q < 3)
+            wr_valid = 1;
+          if(bufferSendCtr.q == 3) {
+            bufferSendCtr.d = 0;
+            sendstate.d = sendstate.SEND;
+          }
+        }
+        else { // fifo full, stop counting
+          bufferSendCtr.d = bufferSendCtr.q;
+        }
+        
       sendstate.SEND:
         if(!wr_full) {
           if(bufferSendCtr.q <= 504 && bufferSendCtr.q != 0) {
@@ -120,10 +145,6 @@ module life_logic (
           if(bufferSendCtr.q > 504) {
             if(calcDone.q) {
               bufferSendCtr.d = 0;
-              if(bufferSel.q == 1)
-                bufferSel.d = 2;
-              else
-                bufferSel.d = 1;
             }
             else {
               bufferSendCtr.d = 505; // Should never happen because the calculation loop should be much faster than the serial comms
@@ -133,6 +154,14 @@ module life_logic (
         else { // fifo full, stop counting
           bufferSendCtr.d = bufferSendCtr.q;
         }
+        
+      sendstate.FPS:
+        if(bufferSel.q == 1)
+          bufferSel.d = 2;
+        else
+          bufferSel.d = 1;
+        //sendstate.d = sendstate.SEND_XYPOS;
+        sendstate.d = sendstate.FPS;
     }
   }
 }

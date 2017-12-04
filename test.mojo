@@ -24,6 +24,10 @@
       <src>lpfTest.ngc</src>
       <src>lpfTest.v</src>
     </core>
+    <core name="screenBuf">
+      <src>screenBuf.v</src>
+      <src>screenBuf.ngc</src>
+    </core>
     <core name="semIP">
       <src>semIP.v</src>
       <src>semIP.ngc</src>
@@ -34,9 +38,6 @@
     </core>
     <core name="clk_wiz">
       <src>clk_wiz.v</src>
-    </core>
-    <core name="screenBuf">
-      <src>screenBuf.v</src>
     </core>
     <core name="screenfifo">
       <src>screenfifo.v</src>
