@@ -13,7 +13,10 @@
 // |              |-------->| Buffer 2 |-------+            +------init_done
 // +--------------+         +----------+
 
-module life_logic (
+module life_logic #(
+  CLK_FREQ = 50000000 : CLK_FREQ > 0, // clock frequency
+  FPS = 1
+  )(
     input clk,  // clock
     input rst,  // reset
     input init_done,
@@ -27,8 +30,8 @@ module life_logic (
       dff bufferSel[2]; // Refers to the buffer currently being read&sent to fifo, 0 - calculation should wait; 1,2 - buf1/buf2
       dff prevBufSel[2];
       dff bufferSendCtr[9];
+      dff fpsCtr[$clog2(CLK_FREQ/FPS+1)];
       dff calcAddr[9];
-      dff sendAddr[9];
       dff calcDone; // Signals to sender that calculations are done
       fsm calcstate = {INIT, LINEBEGIN, READ, CALC, WAIT};
       fsm sendstate = {INIT, SEND_XYPOS, SEND, FPS};
@@ -49,35 +52,35 @@ module life_logic (
     calcDone.d = 0;
     prevBufSel.d = bufferSel.q;
 
-    if(init_done) {
-      case(calcstate.q) {
-        calcstate.INIT: // Wait for a valid buffer
-          if(bufferSel.q != 0)
-            calcstate.d = calcstate.LINEBEGIN;
-          
-        calcstate.LINEBEGIN:
-          calcstate.d = calcstate.READ;
-          
-        calcstate.READ:
-          calcstate.d = calcstate.CALC;
+    case(calcstate.q) {
+      calcstate.INIT: // Wait for a valid buffer
+        calcAddr.d = 83;
+        if(bufferSel.q != 0 && init_done)
+          calcstate.d = calcstate.LINEBEGIN;
         
-        calcstate.CALC:
-          if(bufferSel.q == 2) {
-            buf1.wea = 1;
-            buf1.addra = 0;
-          }
-          else {
-            buf2.wea = 1;
-            buf2.addra = 0;
-          }
-          calcstate.d = calcstate.WAIT;
-          
-        calcstate.WAIT:
-          calcDone.d = 1;
-          if(prevBufSel.q != bufferSel.q) {
-            calcstate.d = calcstate.CALC;
-          }
-      }
+      calcstate.LINEBEGIN: // calcAddr should be (83, y) already when we get here
+        
+        calcstate.d = calcstate.READ;
+        
+      calcstate.READ:
+        calcstate.d = calcstate.CALC;
+      
+      calcstate.CALC:
+        if(bufferSel.q == 2) {
+          buf1.wea = 0;
+          buf1.addra = 0;
+        }
+        else {
+          buf2.wea = 0;
+          buf2.addra = 0;
+        }
+        calcstate.d = calcstate.WAIT;
+        
+      calcstate.WAIT:
+        calcDone.d = 1;
+        if(prevBufSel.q != bufferSel.q) {
+          calcstate.d = calcstate.CALC;
+        }
     }
   }
   
@@ -87,16 +90,16 @@ module life_logic (
     buf2.web = 0;
     buf1.dinb = 8hxx;
     buf2.dinb = 8hxx;
-    buf1.addrb = sendAddr.q;
-    buf2.addrb = sendAddr.q;
     wr_valid = 0;
     fifoIn = 9bxxxxxxxxx;
     bufferSendCtr.d = bufferSendCtr.q + 1;
+    fpsCtr.d = fpsCtr.q + 1;
     buf1.addrb = bufferSendCtr.q;
     buf2.addrb = bufferSendCtr.q;
     
     case(sendstate.q) {
       sendstate.INIT:
+        fpsCtr.d = 0;
         if(bufferSendCtr.q < 504) {
           buf1.web = 1;
           buf1.dinb = 8h01; // Initialize to all 8b00000001's for now
@@ -145,6 +148,7 @@ module life_logic (
           if(bufferSendCtr.q > 504) {
             if(calcDone.q) {
               bufferSendCtr.d = 0;
+              sendstate.d = sendstate.FPS;
             }
             else {
               bufferSendCtr.d = 505; // Should never happen because the calculation loop should be much faster than the serial comms
@@ -156,12 +160,15 @@ module life_logic (
         }
         
       sendstate.FPS:
-        if(bufferSel.q == 1)
-          bufferSel.d = 2;
-        else
-          bufferSel.d = 1;
-        //sendstate.d = sendstate.SEND_XYPOS;
-        sendstate.d = sendstate.FPS;
+        if(fpsCtr.q == CLK_FREQ/FPS) {
+          fpsCtr.d = 0;
+          if(bufferSel.q == 1)
+            bufferSel.d = 2;
+          else
+            bufferSel.d = 1;
+          sendstate.d = sendstate.SEND_XYPOS;
+          //sendstate.d = sendstate.FPS;
+        }
     }
   }
 }

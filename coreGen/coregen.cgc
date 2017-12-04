@@ -3357,10 +3357,10 @@
             <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.READ_WIDTH_B">8</spirit:configurableElementValue>
             <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.OPERATING_MODE_B">WRITE_FIRST</spirit:configurableElementValue>
             <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.ENABLE_B">Always_Enabled</spirit:configurableElementValue>
-            <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.REGISTER_PORTA_OUTPUT_OF_MEMORY_PRIMITIVES">true</spirit:configurableElementValue>
+            <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.REGISTER_PORTA_OUTPUT_OF_MEMORY_PRIMITIVES">false</spirit:configurableElementValue>
             <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.REGISTER_PORTA_OUTPUT_OF_MEMORY_CORE">false</spirit:configurableElementValue>
             <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.USE_REGCEA_PIN">false</spirit:configurableElementValue>
-            <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.REGISTER_PORTB_OUTPUT_OF_MEMORY_PRIMITIVES">true</spirit:configurableElementValue>
+            <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.REGISTER_PORTB_OUTPUT_OF_MEMORY_PRIMITIVES">false</spirit:configurableElementValue>
             <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.REGISTER_PORTB_OUTPUT_OF_MEMORY_CORE">false</spirit:configurableElementValue>
             <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.USE_REGCEB_PIN">false</spirit:configurableElementValue>
             <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.REGISTER_PORTA_INPUT_OF_SOFTECC">false</spirit:configurableElementValue>
@@ -3436,8 +3436,8 @@
             <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_WRITE_DEPTH_B">504</spirit:configurableElementValue>
             <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_READ_DEPTH_B">504</spirit:configurableElementValue>
             <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_ADDRB_WIDTH">9</spirit:configurableElementValue>
-            <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_HAS_MEM_OUTPUT_REGS_A">1</spirit:configurableElementValue>
-            <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_HAS_MEM_OUTPUT_REGS_B">1</spirit:configurableElementValue>
+            <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_HAS_MEM_OUTPUT_REGS_A">0</spirit:configurableElementValue>
+            <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_HAS_MEM_OUTPUT_REGS_B">0</spirit:configurableElementValue>
             <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_HAS_MUX_OUTPUT_REGS_A">0</spirit:configurableElementValue>
             <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_HAS_MUX_OUTPUT_REGS_B">0</spirit:configurableElementValue>
             <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_MUX_PIPELINE_STAGES">0</spirit:configurableElementValue>
@@ -3453,7 +3453,7 @@
             <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_DISABLE_WARN_BHV_RANGE">0</spirit:configurableElementValue>
          </spirit:configurableElementValues>
          <spirit:vendorExtensions>
-            <xilinx:instanceProperties>
+            <xilinx:instanceProperties xmlns:xilinx="http://www.xilinx.com">
                <xilinx:projectOptions>
                   <xilinx:projectName>coregen</xilinx:projectName>
                   <xilinx:outputDirectory>./</xilinx:outputDirectory>
@@ -3495,7 +3495,7 @@
                   <xilinx:file>
                      <xilinx:name>./summary.log</xilinx:name>
                      <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:30 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:40:57 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0xA201D0ED</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3505,7 +3505,7 @@
                   <xilinx:file>
                      <xilinx:name>./summary.log</xilinx:name>
                      <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:33 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:00 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0xA201D0ED</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3515,8 +3515,8 @@
                   <xilinx:file>
                      <xilinx:name>./screenBuf.xco</xilinx:name>
                      <xilinx:userFileType>xco</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:34 GMT 2017</xilinx:timeStamp>
-                     <xilinx:checkSum>0xADF73981</xilinx:checkSum>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:00 GMT 2017</xilinx:timeStamp>
+                     <xilinx:checkSum>0xE83201DC</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
                </xilinx:fileSet>
@@ -3553,7 +3553,7 @@
                      <xilinx:name>./screenBuf/example_design/screenBuf_exdes.ucf</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>ucf</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:37 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:04 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0x8915DFA1</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3561,7 +3561,7 @@
                      <xilinx:name>./screenBuf/example_design/screenBuf_exdes.vhd</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>vhdl</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:37 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:04 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0x3D2D5559</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3569,7 +3569,7 @@
                      <xilinx:name>./screenBuf/example_design/screenBuf_exdes.xdc</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>xdc</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:37 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:04 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0x78E2D49A</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3577,15 +3577,15 @@
                      <xilinx:name>./screenBuf/example_design/screenBuf_prod.vhd</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>vhdl</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:37 GMT 2017</xilinx:timeStamp>
-                     <xilinx:checkSum>0xE2464596</xilinx:checkSum>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:04 GMT 2017</xilinx:timeStamp>
+                     <xilinx:checkSum>0xE0B7E535</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
                   <xilinx:file>
                      <xilinx:name>./screenBuf/implement/implement.bat</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:37 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:04 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0xEE252E93</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3593,7 +3593,7 @@
                      <xilinx:name>./screenBuf/implement/implement.sh</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:37 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:04 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0x98CD7A97</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3601,7 +3601,7 @@
                      <xilinx:name>./screenBuf/implement/planAhead_ise.bat</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:37 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:04 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0x97BB3A6F</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3609,7 +3609,7 @@
                      <xilinx:name>./screenBuf/implement/planAhead_ise.sh</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:38 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:05 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0xABAAB49C</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3617,7 +3617,7 @@
                      <xilinx:name>./screenBuf/implement/planAhead_ise.tcl</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>tcl</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:38 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:05 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0xB2A32F87</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3625,7 +3625,7 @@
                      <xilinx:name>./screenBuf/implement/xst.prj</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:38 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:05 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0x50C22D4B</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3633,7 +3633,7 @@
                      <xilinx:name>./screenBuf/implement/xst.scr</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:38 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:05 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0x35C033F4</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3641,7 +3641,7 @@
                      <xilinx:name>./screenBuf/simulation/addr_gen.vhd</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>vhdl</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:37 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:04 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0x0500E48D</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3649,15 +3649,15 @@
                      <xilinx:name>./screenBuf/simulation/bmg_stim_gen.vhd</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>vhdl</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:37 GMT 2017</xilinx:timeStamp>
-                     <xilinx:checkSum>0x3806C980</xilinx:checkSum>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:04 GMT 2017</xilinx:timeStamp>
+                     <xilinx:checkSum>0x0F2257D9</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
                   <xilinx:file>
                      <xilinx:name>./screenBuf/simulation/bmg_tb_pkg.vhd</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>vhdl</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:37 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:04 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0xE0D93E5B</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3665,7 +3665,7 @@
                      <xilinx:name>./screenBuf/simulation/checker.vhd</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>vhdl</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:37 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:04 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0x3EC35020</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3673,7 +3673,7 @@
                      <xilinx:name>./screenBuf/simulation/data_gen.vhd</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>vhdl</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:37 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:04 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0xD9F7C4A0</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3681,7 +3681,7 @@
                      <xilinx:name>./screenBuf/simulation/functional/simcmds.tcl</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>tcl</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:37 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:03 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0xDBF9A0A5</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3689,7 +3689,7 @@
                      <xilinx:name>./screenBuf/simulation/functional/simulate_isim.sh</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:37 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:04 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0x36260B67</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3697,7 +3697,7 @@
                      <xilinx:name>./screenBuf/simulation/functional/simulate_mti.bat</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:38 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:05 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0x86EA5D67</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3705,7 +3705,7 @@
                      <xilinx:name>./screenBuf/simulation/functional/simulate_mti.do</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:38 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:05 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0x0B4E4FB7</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3713,7 +3713,7 @@
                      <xilinx:name>./screenBuf/simulation/functional/simulate_mti.sh</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:38 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:05 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0x86EA5D67</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3721,7 +3721,7 @@
                      <xilinx:name>./screenBuf/simulation/functional/simulate_ncsim.sh</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:37 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:03 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0xC0BA488D</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3729,7 +3729,7 @@
                      <xilinx:name>./screenBuf/simulation/functional/simulate_vcs.sh</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:36 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:03 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0x75763800</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3737,7 +3737,7 @@
                      <xilinx:name>./screenBuf/simulation/functional/ucli_commands.key</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:36 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:03 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0xA10D2F47</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3745,7 +3745,7 @@
                      <xilinx:name>./screenBuf/simulation/functional/vcs_session.tcl</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>tcl</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:36 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:03 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0x9A9A1345</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3753,7 +3753,7 @@
                      <xilinx:name>./screenBuf/simulation/functional/wave_mti.do</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:37 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:04 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0x8CF693A7</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3761,7 +3761,7 @@
                      <xilinx:name>./screenBuf/simulation/functional/wave_ncsim.sv</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:36 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:03 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0x1E32190F</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3769,7 +3769,7 @@
                      <xilinx:name>./screenBuf/simulation/random.vhd</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>vhdl</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:37 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:04 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0x2939160A</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3777,7 +3777,7 @@
                      <xilinx:name>./screenBuf/simulation/screenBuf_synth.vhd</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>vhdl</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:37 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:04 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0xAD32092E</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3785,7 +3785,7 @@
                      <xilinx:name>./screenBuf/simulation/screenBuf_tb.vhd</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>vhdl</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:37 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:04 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0xE6F3C5FC</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3793,7 +3793,7 @@
                      <xilinx:name>./screenBuf/simulation/timing/simcmds.tcl</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>tcl</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:37 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:03 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0xDBF9A0A5</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3801,7 +3801,7 @@
                      <xilinx:name>./screenBuf/simulation/timing/simulate_isim.sh</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:37 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:04 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0x957D9EFB</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3809,7 +3809,7 @@
                      <xilinx:name>./screenBuf/simulation/timing/simulate_mti.bat</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:38 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:05 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0x86EA5D67</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3817,7 +3817,7 @@
                      <xilinx:name>./screenBuf/simulation/timing/simulate_mti.do</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:38 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:05 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0xED824D6A</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3825,7 +3825,7 @@
                      <xilinx:name>./screenBuf/simulation/timing/simulate_mti.sh</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:38 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:05 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0x86EA5D67</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3833,7 +3833,7 @@
                      <xilinx:name>./screenBuf/simulation/timing/simulate_ncsim.sh</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:36 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:03 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0x3ED78F6C</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3841,7 +3841,7 @@
                      <xilinx:name>./screenBuf/simulation/timing/simulate_vcs.sh</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:36 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:03 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0x7951C58B</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3849,7 +3849,7 @@
                      <xilinx:name>./screenBuf/simulation/timing/ucli_commands.key</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:36 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:03 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0xA10D2F47</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3857,7 +3857,7 @@
                      <xilinx:name>./screenBuf/simulation/timing/vcs_session.tcl</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>tcl</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:36 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:03 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0xF6F75632</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3865,7 +3865,7 @@
                      <xilinx:name>./screenBuf/simulation/timing/wave_mti.do</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:37 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:04 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0x29AF035F</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3873,7 +3873,7 @@
                      <xilinx:name>./screenBuf/simulation/timing/wave_ncsim.sv</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:30:36 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:03 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0xBE06D825</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3883,8 +3883,8 @@
                   <xilinx:file>
                      <xilinx:name>./screenBuf.ngc</xilinx:name>
                      <xilinx:userFileType>ngc</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:31:13 GMT 2017</xilinx:timeStamp>
-                     <xilinx:checkSum>0x30B62359</xilinx:checkSum>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:39 GMT 2017</xilinx:timeStamp>
+                     <xilinx:checkSum>0x5A0F77E3</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
                </xilinx:fileSet>
@@ -3899,7 +3899,7 @@
                   <xilinx:file>
                      <xilinx:name>./screenBuf.veo</xilinx:name>
                      <xilinx:userFileType>veo</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:31:14 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:40 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0xFB7F0A6F</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3909,8 +3909,8 @@
                   <xilinx:file>
                      <xilinx:name>./screenBuf.v</xilinx:name>
                      <xilinx:userFileType>verilog</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:31:14 GMT 2017</xilinx:timeStamp>
-                     <xilinx:checkSum>0x4A76B2D7</xilinx:checkSum>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:40 GMT 2017</xilinx:timeStamp>
+                     <xilinx:checkSum>0xDBCA5231</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
                </xilinx:fileSet>
@@ -3920,7 +3920,7 @@
                      <xilinx:name>./screenBuf/doc/blk_mem_gen_v7_3_vinfo.html</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:31:14 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:40 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0x702C7FA8</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3930,14 +3930,14 @@
                   <xilinx:file>
                      <xilinx:name>./screenBuf.asy</xilinx:name>
                      <xilinx:userFileType>asy</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:31:17 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:43 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0x1CD3A6E6</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
                   <xilinx:file>
                      <xilinx:name>./summary.log</xilinx:name>
                      <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:31:17 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:43 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0xA201D0ED</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3948,7 +3948,7 @@
                      <xilinx:name>./screenBuf_xmdf.tcl</xilinx:name>
                      <xilinx:userFileType>tclXmdf</xilinx:userFileType>
                      <xilinx:userFileType>tcl</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:31:17 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:43 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0x1721C8DE</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3959,7 +3959,7 @@
                      <xilinx:name>./screenBuf.gise</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>gise</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:31:25 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:49 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0x24AF9039</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3967,8 +3967,8 @@
                      <xilinx:name>./screenBuf.xise</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>xise</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:31:25 GMT 2017</xilinx:timeStamp>
-                     <xilinx:checkSum>0x15C5D736</xilinx:checkSum>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:49 GMT 2017</xilinx:timeStamp>
+                     <xilinx:checkSum>0xC27DFCA9</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
                </xilinx:fileSet>
@@ -3978,7 +3978,7 @@
                      <xilinx:name>./screenBuf.gise</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>gise</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:31:27 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:52 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0xC2E30D3F</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
@@ -3986,8 +3986,8 @@
                      <xilinx:name>./screenBuf.xise</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>xise</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:31:27 GMT 2017</xilinx:timeStamp>
-                     <xilinx:checkSum>0x1F7CC76C</xilinx:checkSum>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:52 GMT 2017</xilinx:timeStamp>
+                     <xilinx:checkSum>0xCE9CDFE4</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
                </xilinx:fileSet>
@@ -4001,7 +4001,7 @@
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>txtFlist</xilinx:userFileType>
                      <xilinx:userFileType>txt</xilinx:userFileType>
-                     <xilinx:timeStamp>Sun Dec 03 01:31:27 GMT 2017</xilinx:timeStamp>
+                     <xilinx:timeStamp>Mon Dec 04 06:41:52 GMT 2017</xilinx:timeStamp>
                      <xilinx:checkSum>0xBEE97259</xilinx:checkSum>
                      <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
