@@ -50,7 +50,7 @@ module mojo_top (
     dff lastLpfCtr[3];
     dff lastutx;
     dff scrnBLctr[16];
-    dff scrnBLmax[16];
+    dff scrnBLmax[16](#INIT(15000));
 
     .rst(rst) {
       avr_interface avr;
@@ -87,14 +87,6 @@ module mojo_top (
   }
   
   always {
-    scrn_sclk = life.sclk;
-    scrn_mosi = life.mosi;
-    scrn_dc = life.dc;
-    scrn_rst = life.res;
-    scrn_sce = life.sce;
-  }
-  
-  always {
     if(lpfTest.m_axis_data_tvalid)
       lpfVal.d = lpfTest.m_axis_data_tdata;
 
@@ -119,6 +111,16 @@ module mojo_top (
           lpfState.d = lpfState.IDLE;
         }
     }
+  }
+  
+  always {
+    scrn_sclk = life.sclk;
+    scrn_mosi = life.mosi;
+    scrn_dc = life.dc;
+    scrn_rst = life.res;
+    scrn_sce = life.sce;
+    
+    led[5:0] = life.state[5:0];
   }
   
   always {
@@ -209,7 +211,7 @@ module mojo_top (
   always {
     ledctr.d = ledctr.q + 1;
   }
-  always {
-    led[5:0] = ledctr.q[26+:6];
-  }
+  //always {
+  //  led[5:0] = ledctr.q[26+:6];
+  //}
 }

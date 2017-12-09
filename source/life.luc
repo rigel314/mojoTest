@@ -21,7 +21,8 @@ module life #(
     output res,         // !RES - reset to inturrupt current transfer
     output sclk,        // SCLK - clock
     output mosi,        // SDIN - serial data (changes on falling edge of SCLK)
-    output running // flag to read in top
+    output running, // flag to read in top
+    output state[8]
   ) {
 
   sig wr_valid, rd_ready, rd_valid, fifoIn[9], fifoOut[9], wr_full, rd_empty;
@@ -48,6 +49,8 @@ module life #(
     mosi = comm_screen.mosi;
     
     rd_ready = comm_screen.rd_ready;
+    
+    state = life_logic.state;
     
     init_done = life_init.done;
     if(!init_done) {

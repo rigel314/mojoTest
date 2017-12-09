@@ -22,7 +22,8 @@ module life_logic #(
     input init_done,
     input wr_full,
     output wr_valid,
-    output fifoIn[9]
+    output fifoIn[9],
+    output state[8]
   ) {
 
   .clk(clk) {
@@ -31,9 +32,15 @@ module life_logic #(
       dff prevBufSel[2];
       dff bufferSendCtr[9];
       dff fpsCtr[$clog2(CLK_FREQ/FPS+1)];
-      dff calcAddr[9];
+      dff calcCtr[4];
+      dff cells[9][8];
+      dff calcRaddr[3][9];
+      dff calcWaddr[9];
+      dff outCell[8];
+      dff colCtr[7];
+      dff lineCtr[3];
       dff calcDone; // Signals to sender that calculations are done
-      fsm calcstate = {INIT, LINEBEGIN, READ, CALC, WAIT};
+      fsm calcstate = {INIT, LINEBEGIN, READ, CALC, WRITE, WAIT};
       fsm sendstate = {INIT, SEND_XYPOS, SEND, FPS};
     }
   }
@@ -41,48 +48,344 @@ module life_logic #(
   screenBuf buf1(.clka(clk), .clkb(clk));
   screenBuf buf2(.clka(clk), .clkb(clk));
   
+  sig initAddr[3][9];
+  sig calcAddr[9];
+  sig dout[8];
+  sig cellCount[4];
+  sig newCell;
+  
   // Calc loop
   always {
     buf1.wea = 0;
     buf2.wea = 0;
-    buf1.dina = 8hxx;
-    buf2.dina = 8hxx;
-    buf1.addra = calcAddr.q;
-    buf2.addra = calcAddr.q;
+    buf1.dina = outCell.q;
+    buf2.dina = outCell.q;
+    calcAddr = 0;
     calcDone.d = 0;
     prevBufSel.d = bufferSel.q;
+    calcCtr.d = 0;
 
+    //state = 0;
+    
+    if(bufferSel.q == 1)
+      dout = buf1.douta;
+    else
+      dout = buf2.douta;
+    
+    case(lineCtr.q) {
+      0:
+        initAddr[0] = 503;
+        initAddr[1] = 83;
+        initAddr[2] = 167;
+      1:
+        initAddr[0] = 83;
+        initAddr[1] = 167;
+        initAddr[2] = 251;
+      2:
+        initAddr[0] = 167;
+        initAddr[1] = 251;
+        initAddr[2] = 335;
+      3:
+        initAddr[0] = 251;
+        initAddr[1] = 335;
+        initAddr[2] = 419;
+      4:
+        initAddr[0] = 335;
+        initAddr[1] = 419;
+        initAddr[2] = 503;
+      5:
+        initAddr[0] = 419;
+        initAddr[1] = 503;
+        initAddr[2] = 83;
+      default: // Same as zero
+        initAddr[0] = 503;
+        initAddr[1] = 83;
+        initAddr[2] = 167;
+    }
+    
     case(calcstate.q) {
       calcstate.INIT: // Wait for a valid buffer
-        calcAddr.d = 83;
-        if(bufferSel.q != 0 && init_done)
-          calcstate.d = calcstate.LINEBEGIN;
+        //state = 1;
+        calcstate.d = calcstate.INIT;
+        //if(bufferSel.q != 0 && init_done)
+          //calcstate.d = calcstate.LINEBEGIN;
         
-      calcstate.LINEBEGIN: // calcAddr should be (83, y) already when we get here
-        
-        calcstate.d = calcstate.READ;
+      calcstate.LINEBEGIN: // Read first 6 bytes so the read state can always read just 3
+        //state = 2;
+        calcCtr.d = calcCtr.q + 1;
+        if(calcCtr.q == 0)
+          calcAddr = initAddr[0];
+        if(calcCtr.q == 1) {
+          calcAddr = initAddr[1];
+          cells.d[0] = dout;
+        }
+        if(calcCtr.q == 2) {
+          calcAddr = initAddr[2];
+          cells.d[1] = dout;
+        }
+        if(calcCtr.q == 3) {
+          calcAddr = initAddr[0] - 83;
+          calcRaddr.d[0] = calcAddr;
+          cells.d[2] = dout;
+        }
+        if(calcCtr.q == 4) {
+          calcAddr = initAddr[1] - 83;
+          calcRaddr.d[1] = calcAddr;
+          cells.d[3] = dout;
+        }
+        if(calcCtr.q == 5) {
+          calcAddr = initAddr[2] - 83;
+          calcRaddr.d[2] = calcAddr;
+          cells.d[4] = dout;
+        }
+        if(calcCtr.q == 6) {
+          cells.d[5] = dout;
+          calcstate.d = calcstate.READ;
+        }
         
       calcstate.READ:
-        calcstate.d = calcstate.CALC;
-      
-      calcstate.CALC:
-        if(bufferSel.q == 2) {
-          buf1.wea = 0;
-          buf1.addra = 0;
+        //state = 4;
+        calcCtr.d = calcCtr.q + 1;
+        if(calcCtr.q == 0) {
+          calcAddr = calcRaddr.q[0] + 1;
+          calcRaddr.d[0] = calcRaddr.q[0] + 1;
+          if(calcRaddr.q[0] == initAddr[0])
+            calcRaddr.d[0] = initAddr[0] - 83;
         }
-        else {
-          buf2.wea = 0;
-          buf2.addra = 0;
+        if(calcCtr.q == 1) {
+          calcAddr = calcRaddr.q[1] + 1;
+          calcRaddr.d[1] = calcRaddr.q[1] + 1;
+          if(calcRaddr.q[1] == initAddr[1])
+            calcRaddr.d[1] = initAddr[1] - 83;
+          cells.d[6] = dout;
         }
-        calcstate.d = calcstate.WAIT;
-        
-      calcstate.WAIT:
-        calcDone.d = 1;
-        if(prevBufSel.q != bufferSel.q) {
+        if(calcCtr.q == 2) {
+          calcAddr = calcRaddr.q[2] + 1;
+          calcRaddr.d[2] = calcRaddr.q[2] + 1;
+          if(calcRaddr.q[2] == initAddr[2])
+            calcRaddr.d[2] = initAddr[2] - 83;
+          cells.d[7] = dout;
+        }
+        if(calcCtr.q == 3) {
+          cells.d[8] = dout;
           calcstate.d = calcstate.CALC;
         }
+      
+      calcstate.CALC:
+        //state = 8;
+        calcCtr.d = calcCtr.q + 1;
+        cellCount = 0;
+        newCell = 0;
+        case(calcCtr.q) {
+          0:
+            newCell = cells.q[4][0];
+            if(cells.q[0][7])
+              cellCount = cellCount + 1;
+            if(cells.q[1][0])
+              cellCount = cellCount + 1;
+            if(cells.q[1][1])
+              cellCount = cellCount + 1;
+            if(cells.q[3][7])
+              cellCount = cellCount + 1;
+            if(cells.q[4][1])
+              cellCount = cellCount + 1;
+            if(cells.q[6][7])
+              cellCount = cellCount + 1;
+            if(cells.q[7][0])
+              cellCount = cellCount + 1;
+            if(cells.q[7][1])
+              cellCount = cellCount + 1;
+            
+          1:
+            newCell = cells.q[4][1];
+            if(cells.q[1][0])
+              cellCount = cellCount + 1;
+            if(cells.q[1][1])
+              cellCount = cellCount + 1;
+            if(cells.q[1][2])
+              cellCount = cellCount + 1;
+            if(cells.q[4][0])
+              cellCount = cellCount + 1;
+            if(cells.q[4][2])
+              cellCount = cellCount + 1;
+            if(cells.q[7][0])
+              cellCount = cellCount + 1;
+            if(cells.q[7][1])
+              cellCount = cellCount + 1;
+            if(cells.q[7][2])
+              cellCount = cellCount + 1;
+          
+          2:
+            newCell = cells.q[4][2];
+            if(cells.q[1][1])
+              cellCount = cellCount + 1;
+            if(cells.q[1][2])
+              cellCount = cellCount + 1;
+            if(cells.q[1][3])
+              cellCount = cellCount + 1;
+            if(cells.q[4][1])
+              cellCount = cellCount + 1;
+            if(cells.q[4][3])
+              cellCount = cellCount + 1;
+            if(cells.q[7][1])
+              cellCount = cellCount + 1;
+            if(cells.q[7][2])
+              cellCount = cellCount + 1;
+            if(cells.q[7][3])
+              cellCount = cellCount + 1;
+            
+          3:
+            newCell = cells.q[4][3];
+            if(cells.q[1][2])
+              cellCount = cellCount + 1;
+            if(cells.q[1][3])
+              cellCount = cellCount + 1;
+            if(cells.q[1][4])
+              cellCount = cellCount + 1;
+            if(cells.q[4][2])
+              cellCount = cellCount + 1;
+            if(cells.q[4][4])
+              cellCount = cellCount + 1;
+            if(cells.q[7][2])
+              cellCount = cellCount + 1;
+            if(cells.q[7][3])
+              cellCount = cellCount + 1;
+            if(cells.q[7][4])
+              cellCount = cellCount + 1;
+            
+          4:
+            newCell = cells.q[4][4];
+            if(cells.q[1][3])
+              cellCount = cellCount + 1;
+            if(cells.q[1][4])
+              cellCount = cellCount + 1;
+            if(cells.q[1][5])
+              cellCount = cellCount + 1;
+            if(cells.q[4][3])
+              cellCount = cellCount + 1;
+            if(cells.q[4][5])
+              cellCount = cellCount + 1;
+            if(cells.q[7][3])
+              cellCount = cellCount + 1;
+            if(cells.q[7][4])
+              cellCount = cellCount + 1;
+            if(cells.q[7][5])
+              cellCount = cellCount + 1;
+            
+          5:
+            newCell = cells.q[4][5];
+            if(cells.q[1][4])
+              cellCount = cellCount + 1;
+            if(cells.q[1][5])
+              cellCount = cellCount + 1;
+            if(cells.q[1][6])
+              cellCount = cellCount + 1;
+            if(cells.q[4][4])
+              cellCount = cellCount + 1;
+            if(cells.q[4][6])
+              cellCount = cellCount + 1;
+            if(cells.q[7][4])
+              cellCount = cellCount + 1;
+            if(cells.q[7][5])
+              cellCount = cellCount + 1;
+            if(cells.q[7][6])
+              cellCount = cellCount + 1;
+            
+          6:
+            newCell = cells.q[4][6];
+            if(cells.q[1][5])
+              cellCount = cellCount + 1;
+            if(cells.q[1][6])
+              cellCount = cellCount + 1;
+            if(cells.q[1][7])
+              cellCount = cellCount + 1;
+            if(cells.q[4][5])
+              cellCount = cellCount + 1;
+            if(cells.q[4][7])
+              cellCount = cellCount + 1;
+            if(cells.q[7][5])
+              cellCount = cellCount + 1;
+            if(cells.q[7][6])
+              cellCount = cellCount + 1;
+            if(cells.q[7][7])
+              cellCount = cellCount + 1;
+            
+          7:
+            newCell = cells.q[4][7];
+            if(cells.q[1][6])
+              cellCount = cellCount + 1;
+            if(cells.q[1][7])
+              cellCount = cellCount + 1;
+            if(cells.q[2][0])
+              cellCount = cellCount + 1;
+            if(cells.q[4][6])
+              cellCount = cellCount + 1;
+            if(cells.q[5][0])
+              cellCount = cellCount + 1;
+            if(cells.q[7][6])
+              cellCount = cellCount + 1;
+            if(cells.q[7][7])
+              cellCount = cellCount + 1;
+            if(cells.q[8][0])
+              cellCount = cellCount + 1;
+            
+            calcstate.d = calcstate.WRITE;
+            
+          default:
+            calcstate.d = calcstate.q;
+        }
+        
+        if(cellCount < 2 || cellCount > 3)
+          newCell = 0;
+        if(cellCount == 3)
+          newCell = 1;
+        
+        outCell.d[calcCtr.q] = newCell;
+        
+      calcstate.WRITE:
+        //state = 16;
+        colCtr.d = colCtr.q + 1;
+        calcWaddr.d = calcWaddr.q + 1;
+        calcAddr = calcWaddr.q;
+        if(bufferSel.q == 2) {
+          buf1.wea = 0;//1;
+        }
+        else {
+          buf2.wea = 0;//1;
+        }
+        if(colCtr.q == 83) {
+          lineCtr.d = lineCtr.q + 1;
+          if(lineCtr.q == 5) {
+            calcstate.d = calcstate.WAIT;
+            lineCtr.d = 0;
+          }
+          else {
+            calcstate.d = calcstate.LINEBEGIN;
+            calcWaddr.d = 0;
+          }
+          colCtr.d = 0;
+        }
+        calcstate.d = calcstate.READ;
+        
+        cells.d[0] = cells.q[3];
+        cells.d[1] = cells.q[4];
+        cells.d[2] = cells.q[5];
+        cells.d[3] = cells.q[6];
+        cells.d[4] = cells.q[7];
+        cells.d[5] = cells.q[8];
+        
+      calcstate.WAIT:
+        //state = 32;
+        calcDone.d = 1;
+        if(prevBufSel.q != bufferSel.q) {
+          calcstate.d = calcstate.LINEBEGIN;
+        }
     }
+    buf1.addra = calcAddr;
+    buf2.addra = calcAddr;
   }
+  
+  sig sendAddr[9];
   
   // Sender loop
   always {
@@ -94,21 +397,25 @@ module life_logic #(
     fifoIn = 9bxxxxxxxxx;
     bufferSendCtr.d = bufferSendCtr.q + 1;
     fpsCtr.d = fpsCtr.q + 1;
-    buf1.addrb = bufferSendCtr.q;
-    buf2.addrb = bufferSendCtr.q;
+    sendAddr = 0;
+    
+    state = 0;
     
     case(sendstate.q) {
       sendstate.INIT:
         fpsCtr.d = 0;
+        sendAddr = bufferSendCtr.q;
         if(bufferSendCtr.q < 504) {
           buf1.web = 1;
           buf1.dinb = 8h01; // Initialize to all 8b00000001's for now
+          buf2.web = 1;
+          buf2.dinb = 8h82; // Initialize to all 8b00000001's for now
         }
         else {
           if(init_done) {
             bufferSendCtr.d = 0;
             bufferSel.d = 1;
-            sendstate.d = sendstate.SEND;
+            sendstate.d = sendstate.SEND_XYPOS;
           }
           else {
             bufferSendCtr.d = 504; // Wait until init_done is true
@@ -135,6 +442,7 @@ module life_logic #(
         }
         
       sendstate.SEND:
+        sendAddr = bufferSendCtr.q;
         if(!wr_full) {
           if(bufferSendCtr.q <= 504 && bufferSendCtr.q != 0) {
             wr_valid = 1;
@@ -170,5 +478,7 @@ module life_logic #(
           //sendstate.d = sendstate.FPS;
         }
     }
+    buf1.addrb = sendAddr;
+    buf2.addrb = sendAddr;
   }
 }
