@@ -40,6 +40,8 @@ module life_logic #(
       dff colCtr[7];
       dff lineCtr[3];
       dff calcDone; // Signals to sender that calculations are done
+      dff prevFull;
+      dff prevData[8];
       fsm calcstate = {INIT, LINEBEGIN, READ, CALC, WRITE, WAIT};
       fsm sendstate = {INIT, SEND_XYPOS, SEND, FPS};
     }
@@ -106,6 +108,7 @@ module life_logic #(
     case(calcstate.q) {
       calcstate.INIT: // Wait for a valid buffer
         //state = 1;
+        calcDone.d = 1;
         calcstate.d = calcstate.INIT;
         //if(bufferSel.q != 0 && init_done)
           //calcstate.d = calcstate.LINEBEGIN;
@@ -386,6 +389,7 @@ module life_logic #(
   }
   
   sig sendAddr[9];
+  sig sendDout[8];
   
   // Sender loop
   always {
@@ -398,7 +402,13 @@ module life_logic #(
     bufferSendCtr.d = bufferSendCtr.q + 1;
     fpsCtr.d = fpsCtr.q + 1;
     sendAddr = 0;
+    prevFull.d = wr_full;
     
+    if(bufferSel.q == 1)
+      sendDout = buf1.doutb; // will be the value from previous cycle's address
+    else
+      sendDout = buf2.doutb; // will be the value from previous cycle's address
+
     state = 0;
     
     case(sendstate.q) {
@@ -407,12 +417,13 @@ module life_logic #(
         sendAddr = bufferSendCtr.q;
         if(bufferSendCtr.q < 504) {
           buf1.web = 1;
-          buf1.dinb = 8h01; // Initialize to all 8b00000001's for now
+          buf1.dinb = bufferSendCtr.q[7:0];//8h01; // Initialize to all 8b00000001's for now
           buf2.web = 1;
           buf2.dinb = 8h82; // Initialize to all 8b00000001's for now
         }
         else {
           if(init_done) {
+            fpsCtr.d = 0;
             bufferSendCtr.d = 0;
             bufferSel.d = 1;
             sendstate.d = sendstate.SEND_XYPOS;
@@ -446,11 +457,12 @@ module life_logic #(
         if(!wr_full) {
           if(bufferSendCtr.q <= 504 && bufferSendCtr.q != 0) {
             wr_valid = 1;
-            if(bufferSel.q == 1) {
-              fifoIn = c{1b1, buf1.doutb}; // will be the value from previous cycle's address
+            if(prevFull.q) {
+              bufferSendCtr.d = bufferSendCtr.q;
+              fifoIn = c{1b1, prevData.q};
             }
-            if(bufferSel.q == 2) {
-              fifoIn = c{1b1, buf2.doutb}; // will be the value from previous cycle's address
+            else {
+              fifoIn = c{1b1, sendDout}; // will be the value from previous cycle's address
             }
           }
           if(bufferSendCtr.q > 504) {
@@ -464,10 +476,13 @@ module life_logic #(
           }
         }
         else { // fifo full, stop counting
+          if(!prevFull.q)
+            prevData.d = sendDout;
           bufferSendCtr.d = bufferSendCtr.q;
         }
         
       sendstate.FPS:
+        bufferSendCtr.d = 0;
         if(fpsCtr.q == CLK_FREQ/FPS) {
           fpsCtr.d = 0;
           if(bufferSel.q == 1)
@@ -475,7 +490,6 @@ module life_logic #(
           else
             bufferSel.d = 1;
           sendstate.d = sendstate.SEND_XYPOS;
-          //sendstate.d = sendstate.FPS;
         }
     }
     buf1.addrb = sendAddr;

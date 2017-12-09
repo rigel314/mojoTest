@@ -110,7 +110,7 @@ module life_init #(
           state.SCRN_DATA:
             cmdctr.d = cmdctr.q + 1;
             if(cmdctr.q < 504) {
-              fifoIn = c{1b1, 8h00};
+              fifoIn = c{1b1, cmdctr.q[7:0]};//8h00};
               wr_valid = 1;
             }
             else {

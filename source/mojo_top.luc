@@ -56,7 +56,7 @@ module mojo_top (
       avr_interface avr;
       reg_interface_debug reg;
     }
-    life life(#CLK_FREQ(50000000), .rst(rst));
+    life life(#CLK_FREQ(50000000), #FPS(1), .rst(rst));
   }
 
   .clk(c250M) {
