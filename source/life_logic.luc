@@ -67,7 +67,7 @@ module life_logic #(
     prevBufSel.d = bufferSel.q;
     calcCtr.d = 0;
 
-    //state = 0;
+    //state[7:1] = 0;
     
     if(bufferSel.q == 1)
       dout = buf1.douta;
@@ -108,13 +108,13 @@ module life_logic #(
     case(calcstate.q) {
       calcstate.INIT: // Wait for a valid buffer
         //state = 1;
-        calcDone.d = 1;
+        //calcDone.d = 1;
         calcstate.d = calcstate.INIT;
-        //if(bufferSel.q != 0 && init_done)
-          //calcstate.d = calcstate.LINEBEGIN;
+        if(bufferSel.q != 0 && init_done)
+          calcstate.d = calcstate.LINEBEGIN;
         
       calcstate.LINEBEGIN: // Read first 6 bytes so the read state can always read just 3
-        //state = 2;
+        state[7:1] = 1;
         calcCtr.d = calcCtr.q + 1;
         if(calcCtr.q == 0)
           calcAddr = initAddr[0];
@@ -147,7 +147,7 @@ module life_logic #(
         }
         
       calcstate.READ:
-        //state = 4;
+        state[7:1] = 2;
         calcCtr.d = calcCtr.q + 1;
         if(calcCtr.q == 0) {
           calcAddr = calcRaddr.q[0] + 1;
@@ -175,7 +175,7 @@ module life_logic #(
         }
       
       calcstate.CALC:
-        //state = 8;
+        state[7:1] = 4;
         calcCtr.d = calcCtr.q + 1;
         cellCount = 0;
         newCell = 0;
@@ -346,29 +346,31 @@ module life_logic #(
         outCell.d[calcCtr.q] = newCell;
         
       calcstate.WRITE:
-        //state = 16;
+        state[7:1] = 8;
         colCtr.d = colCtr.q + 1;
         calcWaddr.d = calcWaddr.q + 1;
         calcAddr = calcWaddr.q;
+        
+        calcstate.d = calcstate.READ;
+        
         if(bufferSel.q == 2) {
-          buf1.wea = 0;//1;
+          buf1.wea = 1;
         }
         else {
-          buf2.wea = 0;//1;
+          buf2.wea = 1;
         }
         if(colCtr.q == 83) {
+          colCtr.d = 0;
           lineCtr.d = lineCtr.q + 1;
           if(lineCtr.q == 5) {
             calcstate.d = calcstate.WAIT;
             lineCtr.d = 0;
+            calcWaddr.d = 0;
           }
           else {
             calcstate.d = calcstate.LINEBEGIN;
-            calcWaddr.d = 0;
           }
-          colCtr.d = 0;
         }
-        calcstate.d = calcstate.READ;
         
         cells.d[0] = cells.q[3];
         cells.d[1] = cells.q[4];
@@ -378,7 +380,7 @@ module life_logic #(
         cells.d[5] = cells.q[8];
         
       calcstate.WAIT:
-        //state = 32;
+        state[7:1] = 16;
         calcDone.d = 1;
         if(prevBufSel.q != bufferSel.q) {
           calcstate.d = calcstate.LINEBEGIN;
@@ -409,7 +411,7 @@ module life_logic #(
     else
       sendDout = buf2.doutb; // will be the value from previous cycle's address
 
-    state = 0;
+    state[0] = 0;
     
     case(sendstate.q) {
       sendstate.INIT:
@@ -471,6 +473,7 @@ module life_logic #(
               sendstate.d = sendstate.FPS;
             }
             else {
+              state[0] = 1;
               bufferSendCtr.d = 505; // Should never happen because the calculation loop should be much faster than the serial comms
             }
           }
