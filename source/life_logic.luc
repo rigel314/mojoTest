@@ -417,7 +417,7 @@ module life_logic #(
         sendAddr = bufferSendCtr.q;
         if(bufferSendCtr.q < 504) {
           buf1.web = 1;
-          buf1.dinb = bufferSendCtr.q[7:0];//8h01; // Initialize to all 8b00000001's for now
+          buf1.dinb = 8h01;//bufferSendCtr.q[7:0];//8h01; // Initialize to all 8b00000001's for now
           buf2.web = 1;
           buf2.dinb = 8h82; // Initialize to all 8b00000001's for now
         }
@@ -458,7 +458,7 @@ module life_logic #(
           if(bufferSendCtr.q <= 504 && bufferSendCtr.q != 0) {
             wr_valid = 1;
             if(prevFull.q) {
-              bufferSendCtr.d = bufferSendCtr.q;
+              //bufferSendCtr.d = bufferSendCtr.q;
               fifoIn = c{1b1, prevData.q};
             }
             else {
