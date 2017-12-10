@@ -5,7 +5,7 @@
 
 INFO: [Common 17-78] Attempting to get a license: PlanAhead
 INFO: [Common 17-290] Got license for PlanAhead
-INFO: [Common 17-86] Your PlanAhead license expires in -1015 day(s)
+INFO: [Common 17-86] Your PlanAhead license expires in -1016 day(s)
 INFO: [Device 21-36] Loading parts and site information from /opt/Xilinx/14.7/ISE_DS/PlanAhead/data/parts/arch.xml
 Parsing RTL primitives file [/opt/Xilinx/14.7/ISE_DS/PlanAhead/data/parts/xilinx/rtl/prims/rtl_prims.xml]
 Finished parsing RTL primitives file [/opt/Xilinx/14.7/ISE_DS/PlanAhead/data/parts/xilinx/rtl/prims/rtl_prims.xml]
@@ -29,10 +29,10 @@ source /home/cody/mojo/test/work/project.tcl
 # set_property steps.par.args.mt on [get_runs impl_1]
 # update_compile_order -fileset sources_1
 # launch_runs -runs synth_1
-[Sat Dec  9 22:38:29 2017] Launched synth_1...
+[Sun Dec 10 09:24:05 2017] Launched synth_1...
 Run output will be captured here: /home/cody/mojo/test/work/planAhead/test/test.runs/synth_1/runme.log
 # wait_on_run synth_1
-[Sat Dec  9 22:38:29 2017] Waiting for synth_1 to finish...
+[Sun Dec 10 09:24:05 2017] Waiting for synth_1 to finish...
 
 *** Running xst
     with args -ifn mojo_top_0.xst -ofn mojo_top_0.srp -intstyle ise
@@ -205,6 +205,7 @@ INFO:Xst:3210 - "/home/cody/mojo/test/work/planAhead/test/test.srcs/sources_1/im
 INFO:Xst:3210 - "/home/cody/mojo/test/work/planAhead/test/test.srcs/sources_1/imports/verilog/mojo_top_0.v" line 273: Output port <PIT1_Interrupt> of the instance <uBlaze> is unconnected or connected to loadless signal.
 INFO:Xst:3210 - "/home/cody/mojo/test/work/planAhead/test/test.srcs/sources_1/imports/verilog/mojo_top_0.v" line 273: Output port <PIT1_Toggle> of the instance <uBlaze> is unconnected or connected to loadless signal.
 INFO:Xst:3210 - "/home/cody/mojo/test/work/planAhead/test/test.srcs/sources_1/imports/verilog/mojo_top_0.v" line 273: Output port <INTC_IRQ> of the instance <uBlaze> is unconnected or connected to loadless signal.
+    Found 4-bit register for signal <M_semStatus_q>.
     Found 3-bit register for signal <M_lpfctr_q>.
     Found 32-bit register for signal <M_lpfVal_q>.
     Found 1-bit register for signal <M_lpfState_q>.
@@ -212,7 +213,6 @@ INFO:Xst:3210 - "/home/cody/mojo/test/work/planAhead/test/test.srcs/sources_1/im
     Found 1-bit register for signal <M_lastutx_q>.
     Found 16-bit register for signal <M_scrnBLctr_q>.
     Found 16-bit register for signal <M_scrnBLmax_q>.
-    Found 4-bit register for signal <M_semStatus_q>.
     Found 3-bit adder for signal <M_lpfctr_q[2]_GND_1_o_add_1_OUT> created at line 314.
     Found 16-bit adder for signal <M_scrnBLctr_d> created at line 374.
 WARNING:Xst:737 - Found 1-bit latch for signal <lpfInData<14>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
@@ -545,8 +545,9 @@ Unit <life_init_13> synthesized.
 Synthesizing Unit <life_logic_14>.
     Related source file is "/home/cody/mojo/test/work/planAhead/test/test.srcs/sources_1/imports/verilog/life_logic_14.v".
     Found 2-bit register for signal <M_bufferSel_q>.
+    Found 2-bit register for signal <M_prevBufSel_q>.
     Found 9-bit register for signal <M_bufferSendCtr_q>.
-    Found 28-bit register for signal <M_fpsCtr_q>.
+    Found 24-bit register for signal <M_fpsCtr_q>.
     Found 4-bit register for signal <M_calcCtr_q>.
     Found 72-bit register for signal <M_cells_q>.
     Found 27-bit register for signal <M_calcRaddr_q>.
@@ -564,7 +565,7 @@ Synthesizing Unit <life_logic_14>.
     | States             | 3                                              |
     | Transitions        | 18                                             |
     | Inputs             | 5                                              |
-    | Outputs            | 3                                              |
+    | Outputs            | 5                                              |
     | Clock              | clk (rising_edge)                              |
     | Reset              | rst (positive)                                 |
     | Reset type         | synchronous                                    |
@@ -576,8 +577,8 @@ Synthesizing Unit <life_logic_14>.
     Found finite state machine <FSM_7> for signal <M_calcstate_q>.
     -----------------------------------------------------------------------
     | States             | 6                                              |
-    | Transitions        | 13                                             |
-    | Inputs             | 7                                              |
+    | Transitions        | 14                                             |
+    | Inputs             | 8                                              |
     | Outputs            | 10                                             |
     | Clock              | clk (rising_edge)                              |
     | Reset              | rst (positive)                                 |
@@ -604,102 +605,103 @@ Synthesizing Unit <life_logic_14>.
     Found 9-bit subtractor for signal <M_lineCtr_q[2]_GND_25_o_sub_14_OUT> created at line 195.
     Found 9-bit subtractor for signal <M_lineCtr_q[2]_GND_25_o_sub_17_OUT> created at line 200.
     Found 9-bit subtractor for signal <M_lineCtr_q[2]_GND_25_o_sub_20_OUT> created at line 205.
-    Found 9-bit adder for signal <M_calcRaddr_q[8]_GND_25_o_add_25_OUT> created at line 218.
-    Found 9-bit adder for signal <M_calcRaddr_q[17]_GND_25_o_add_31_OUT> created at line 225.
-    Found 9-bit adder for signal <M_calcRaddr_q[26]_GND_25_o_add_37_OUT> created at line 233.
-    Found 4-bit adder for signal <M_calcCtr_q[3]_GND_25_o_add_44_OUT> created at line 247.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_46_OUT> created at line 256.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_48_OUT> created at line 259.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_50_OUT> created at line 262.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_52_OUT> created at line 265.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_54_OUT> created at line 268.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_56_OUT> created at line 271.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_58_OUT> created at line 274.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_61_OUT> created at line 282.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_63_OUT> created at line 285.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_65_OUT> created at line 288.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_67_OUT> created at line 291.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_69_OUT> created at line 294.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_71_OUT> created at line 297.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_73_OUT> created at line 300.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_76_OUT> created at line 308.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_78_OUT> created at line 311.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_80_OUT> created at line 314.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_82_OUT> created at line 317.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_84_OUT> created at line 320.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_86_OUT> created at line 323.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_88_OUT> created at line 326.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_91_OUT> created at line 334.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_93_OUT> created at line 337.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_95_OUT> created at line 340.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_97_OUT> created at line 343.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_99_OUT> created at line 346.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_101_OUT> created at line 349.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_103_OUT> created at line 352.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_106_OUT> created at line 360.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_108_OUT> created at line 363.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_110_OUT> created at line 366.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_112_OUT> created at line 369.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_114_OUT> created at line 372.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_116_OUT> created at line 375.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_118_OUT> created at line 378.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_121_OUT> created at line 386.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_123_OUT> created at line 389.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_125_OUT> created at line 392.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_127_OUT> created at line 395.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_129_OUT> created at line 398.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_131_OUT> created at line 401.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_133_OUT> created at line 404.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_136_OUT> created at line 412.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_138_OUT> created at line 415.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_140_OUT> created at line 418.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_142_OUT> created at line 421.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_144_OUT> created at line 424.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_146_OUT> created at line 427.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_148_OUT> created at line 430.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_151_OUT> created at line 438.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_153_OUT> created at line 441.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_155_OUT> created at line 444.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_157_OUT> created at line 447.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_159_OUT> created at line 450.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_161_OUT> created at line 453.
-    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_163_OUT> created at line 456.
-    Found 7-bit adder for signal <n0713> created at line 464.
-    Found 7-bit adder for signal <M_colCtr_q[6]_GND_25_o_add_182_OUT> created at line 475.
-    Found 9-bit adder for signal <M_calcWaddr_q[8]_GND_25_o_add_183_OUT> created at line 476.
-    Found 3-bit adder for signal <M_lineCtr_q[2]_GND_25_o_add_186_OUT> created at line 486.
-    Found 9-bit adder for signal <M_bufferSendCtr_q[8]_GND_25_o_add_235_OUT> created at line 533.
-    Found 28-bit adder for signal <M_fpsCtr_q[27]_GND_25_o_add_236_OUT> created at line 534.
-    Found 143-bit shifter logical right for signal <n0652> created at line 464
+    Found 9-bit adder for signal <M_calcRaddr_q[8]_GND_25_o_add_26_OUT> created at line 219.
+    Found 9-bit adder for signal <M_calcRaddr_q[17]_GND_25_o_add_32_OUT> created at line 226.
+    Found 9-bit adder for signal <M_calcRaddr_q[26]_GND_25_o_add_38_OUT> created at line 234.
+    Found 4-bit adder for signal <M_calcCtr_q[3]_GND_25_o_add_46_OUT> created at line 249.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_48_OUT> created at line 258.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_50_OUT> created at line 261.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_52_OUT> created at line 264.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_54_OUT> created at line 267.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_56_OUT> created at line 270.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_58_OUT> created at line 273.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_60_OUT> created at line 276.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_63_OUT> created at line 284.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_65_OUT> created at line 287.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_67_OUT> created at line 290.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_69_OUT> created at line 293.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_71_OUT> created at line 296.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_73_OUT> created at line 299.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_75_OUT> created at line 302.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_78_OUT> created at line 310.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_80_OUT> created at line 313.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_82_OUT> created at line 316.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_84_OUT> created at line 319.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_86_OUT> created at line 322.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_88_OUT> created at line 325.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_90_OUT> created at line 328.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_93_OUT> created at line 336.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_95_OUT> created at line 339.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_97_OUT> created at line 342.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_99_OUT> created at line 345.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_101_OUT> created at line 348.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_103_OUT> created at line 351.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_105_OUT> created at line 354.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_108_OUT> created at line 362.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_110_OUT> created at line 365.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_112_OUT> created at line 368.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_114_OUT> created at line 371.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_116_OUT> created at line 374.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_118_OUT> created at line 377.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_120_OUT> created at line 380.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_123_OUT> created at line 388.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_125_OUT> created at line 391.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_127_OUT> created at line 394.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_129_OUT> created at line 397.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_131_OUT> created at line 400.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_133_OUT> created at line 403.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_135_OUT> created at line 406.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_138_OUT> created at line 414.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_140_OUT> created at line 417.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_142_OUT> created at line 420.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_144_OUT> created at line 423.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_146_OUT> created at line 426.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_148_OUT> created at line 429.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_150_OUT> created at line 432.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_153_OUT> created at line 440.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_155_OUT> created at line 443.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_157_OUT> created at line 446.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_159_OUT> created at line 449.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_161_OUT> created at line 452.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_163_OUT> created at line 455.
+    Found 4-bit adder for signal <GND_25_o_GND_25_o_add_165_OUT> created at line 458.
+    Found 7-bit adder for signal <n0727> created at line 466.
+    Found 7-bit adder for signal <M_colCtr_q[6]_GND_25_o_add_184_OUT> created at line 477.
+    Found 9-bit adder for signal <M_calcWaddr_q[8]_GND_25_o_add_185_OUT> created at line 478.
+    Found 3-bit adder for signal <M_lineCtr_q[2]_GND_25_o_add_188_OUT> created at line 488.
+    Found 9-bit adder for signal <M_bufferSendCtr_q[8]_GND_25_o_add_237_OUT> created at line 534.
+    Found 24-bit adder for signal <M_fpsCtr_q[23]_GND_25_o_add_238_OUT> created at line 535.
+    Found 143-bit shifter logical right for signal <n0664> created at line 466
     Found 8x27-bit Read Only RAM for signal <initAddr>
-    Found 4x9-bit Read Only RAM for signal <_n0930>
-    Found 9-bit 4-to-1 multiplexer for signal <M_bufferSendCtr_d> created at line 544.
-    Found 28-bit 4-to-1 multiplexer for signal <M_fpsCtr_d> created at line 544.
-    Found 1-bit 4-to-1 multiplexer for signal <wr_valid> created at line 544.
-    Found 9-bit 7-to-1 multiplexer for signal <_n0925> created at line 204.
-    Found 9-bit 4-to-1 multiplexer for signal <_n0927> created at line 232.
-    Found 4-bit 8-to-1 multiplexer for signal <_n0922> created at line 250.
+    Found 4x9-bit Read Only RAM for signal <_n0934>
+    Found 9-bit 4-to-1 multiplexer for signal <M_bufferSendCtr_d> created at line 545.
+    Found 24-bit 4-to-1 multiplexer for signal <M_fpsCtr_d> created at line 545.
+    Found 1-bit 4-to-1 multiplexer for signal <wr_valid> created at line 545.
+    Found 9-bit 7-to-1 multiplexer for signal <_n0929> created at line 204.
+    Found 9-bit 4-to-1 multiplexer for signal <_n0931> created at line 233.
+    Found 4-bit 8-to-1 multiplexer for signal <_n0926> created at line 252.
 WARNING:Xst:737 - Found 1-bit latch for signal <state<6>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
 WARNING:Xst:737 - Found 1-bit latch for signal <state<5>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
 WARNING:Xst:737 - Found 1-bit latch for signal <state<4>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
 WARNING:Xst:737 - Found 1-bit latch for signal <state<3>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
 WARNING:Xst:737 - Found 1-bit latch for signal <state<2>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
 WARNING:Xst:737 - Found 1-bit latch for signal <state<1>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
-    Found 9-bit comparator equal for signal <M_calcRaddr_q[8]_M_lineCtr_q[2]_equal_28_o> created at line 220
-    Found 9-bit comparator equal for signal <M_calcRaddr_q[17]_M_lineCtr_q[2]_equal_34_o> created at line 227
-    Found 9-bit comparator equal for signal <M_calcRaddr_q[26]_M_lineCtr_q[2]_equal_40_o> created at line 235
-    Found 4-bit comparator greater for signal <M_calcCtr_q[3]_GND_25_o_LessThan_179_o> created at line 465
-    Found 4-bit comparator greater for signal <GND_25_o_M_calcCtr_q[3]_LessThan_180_o> created at line 465
-    Found 9-bit comparator greater for signal <M_bufferSendCtr_q[8]_PWR_23_o_LessThan_240_o> created at line 548
-    Found 9-bit comparator greater for signal <M_bufferSendCtr_q[8]_GND_25_o_LessThan_255_o> created at line 575
-    Found 9-bit comparator greater for signal <n0399> created at line 589
+    Found 9-bit comparator equal for signal <M_calcRaddr_q[8]_M_lineCtr_q[2]_equal_29_o> created at line 221
+    Found 9-bit comparator equal for signal <M_calcRaddr_q[17]_M_lineCtr_q[2]_equal_35_o> created at line 228
+    Found 9-bit comparator equal for signal <M_calcRaddr_q[26]_M_lineCtr_q[2]_equal_41_o> created at line 236
+    Found 4-bit comparator greater for signal <M_calcCtr_q[3]_GND_25_o_LessThan_181_o> created at line 467
+    Found 4-bit comparator greater for signal <GND_25_o_M_calcCtr_q[3]_LessThan_182_o> created at line 467
+    Found 2-bit comparator equal for signal <n0345> created at line 507
+    Found 9-bit comparator greater for signal <M_bufferSendCtr_q[8]_PWR_23_o_LessThan_242_o> created at line 549
+    Found 9-bit comparator greater for signal <M_bufferSendCtr_q[8]_GND_25_o_LessThan_257_o> created at line 576
+    Found 9-bit comparator greater for signal <n0405> created at line 590
     Summary:
     inferred   2 RAM(s).
     inferred  69 Adder/Subtractor(s).
-    inferred 177 D-type flip-flop(s).
+    inferred 175 D-type flip-flop(s).
     inferred   6 Latch(s).
-    inferred   8 Comparator(s).
-    inferred 265 Multiplexer(s).
+    inferred   9 Comparator(s).
+    inferred 270 Multiplexer(s).
     inferred   1 Combinational logic shifter(s).
     inferred   3 Finite State Machine(s).
 Unit <life_logic_14> synthesized.
@@ -769,8 +771,7 @@ Macro Statistics
  14-bit adder                                          : 1
  16-bit adder                                          : 1
  2-bit adder                                           : 1
- 24-bit adder                                          : 2
- 28-bit adder                                          : 1
+ 24-bit adder                                          : 3
  3-bit adder                                           : 4
  3-bit subtractor                                      : 1
  32-bit adder                                          : 1
@@ -781,15 +782,14 @@ Macro Statistics
  8-bit adder                                           : 2
  9-bit adder                                           : 6
  9-bit subtractor                                      : 3
-# Registers                                            : 70
+# Registers                                            : 71
  1-bit register                                        : 18
  10-bit register                                       : 1
  14-bit register                                       : 1
  16-bit register                                       : 2
- 2-bit register                                        : 2
- 24-bit register                                       : 2
+ 2-bit register                                        : 3
+ 24-bit register                                       : 3
  27-bit register                                       : 1
- 28-bit register                                       : 1
  3-bit register                                        : 8
  32-bit register                                       : 8
  4-bit register                                        : 6
@@ -800,27 +800,27 @@ Macro Statistics
  9-bit register                                        : 4
 # Latches                                              : 54
  1-bit latch                                           : 54
-# Comparators                                          : 15
+# Comparators                                          : 16
  16-bit comparator greater                             : 1
+ 2-bit comparator equal                                : 1
  3-bit comparator not equal                            : 1
  32-bit comparator lessequal                           : 1
  4-bit comparator greater                              : 2
  6-bit comparator lessequal                            : 1
  9-bit comparator equal                                : 3
  9-bit comparator greater                              : 6
-# Multiplexers                                         : 420
+# Multiplexers                                         : 425
  1-bit 2-to-1 multiplexer                              : 226
  1-bit 4-to-1 multiplexer                              : 1
  10-bit 2-to-1 multiplexer                             : 1
  2-bit 2-to-1 multiplexer                              : 5
- 24-bit 2-to-1 multiplexer                             : 5
+ 24-bit 2-to-1 multiplexer                             : 6
+ 24-bit 4-to-1 multiplexer                             : 1
  27-bit 2-to-1 multiplexer                             : 1
- 28-bit 2-to-1 multiplexer                             : 1
- 28-bit 4-to-1 multiplexer                             : 1
  3-bit 2-to-1 multiplexer                              : 5
  32-bit 2-to-1 multiplexer                             : 8
  33-bit 2-to-1 multiplexer                             : 6
- 4-bit 2-to-1 multiplexer                              : 88
+ 4-bit 2-to-1 multiplexer                              : 93
  4-bit 8-to-1 multiplexer                              : 1
  6-bit 2-to-1 multiplexer                              : 9
  7-bit 2-to-1 multiplexer                              : 7
@@ -895,10 +895,9 @@ INFO:Xst:3212 - HDL ADVISOR - Asynchronous or synchronous initialization of the 
 Unit <life_init_13> synthesized (advanced).
 
 Synthesizing (advanced) Unit <life_logic_14>.
-The following registers are absorbed into counter <M_calcCtr_q>: 1 register on signal <M_calcCtr_q>.
-The following registers are absorbed into counter <M_colCtr_q>: 1 register on signal <M_colCtr_q>.
 The following registers are absorbed into counter <M_lineCtr_q>: 1 register on signal <M_lineCtr_q>.
-INFO:Xst:3231 - The small RAM <Mram__n0930> will be implemented on LUTs in order to maximize performance and save block RAM resources. If you want to force its implementation on block, use option/constraint ram_style.
+The following registers are absorbed into counter <M_colCtr_q>: 1 register on signal <M_colCtr_q>.
+INFO:Xst:3231 - The small RAM <Mram__n0934> will be implemented on LUTs in order to maximize performance and save block RAM resources. If you want to force its implementation on block, use option/constraint ram_style.
     -----------------------------------------------------------------------
     | ram_type           | Distributed                         |          |
     -----------------------------------------------------------------------
@@ -979,49 +978,48 @@ Macro Statistics
  4x9-bit single-port distributed Read Only RAM         : 2
  8x27-bit single-port distributed Read Only RAM        : 1
  8x9-bit single-port distributed Read Only RAM         : 1
-# Adders/Subtractors                                   : 76
+# Adders/Subtractors                                   : 77
  2-bit adder                                           : 1
- 24-bit adder                                          : 1
- 28-bit adder                                          : 1
+ 24-bit adder                                          : 2
  32-bit adder                                          : 1
- 4-bit adder                                           : 56
+ 4-bit adder                                           : 57
  6-bit adder                                           : 2
  6-bit subtractor                                      : 1
  7-bit adder                                           : 3
  8-bit adder                                           : 1
  9-bit adder                                           : 6
  9-bit subtractor                                      : 3
-# Counters                                             : 12
+# Counters                                             : 11
  14-bit up counter                                     : 1
  16-bit up counter                                     : 1
  24-bit up counter                                     : 1
  3-bit down counter                                    : 1
  3-bit up counter                                      : 4
- 4-bit up counter                                      : 2
+ 4-bit up counter                                      : 1
  7-bit up counter                                      : 1
  8-bit up counter                                      : 1
-# Registers                                            : 606
- Flip-Flops                                            : 606
-# Comparators                                          : 15
+# Registers                                            : 608
+ Flip-Flops                                            : 608
+# Comparators                                          : 16
  16-bit comparator greater                             : 1
+ 2-bit comparator equal                                : 1
  3-bit comparator not equal                            : 1
  32-bit comparator lessequal                           : 1
  4-bit comparator greater                              : 2
  6-bit comparator lessequal                            : 1
  9-bit comparator equal                                : 3
  9-bit comparator greater                              : 6
-# Multiplexers                                         : 427
+# Multiplexers                                         : 433
  1-bit 2-to-1 multiplexer                              : 243
  1-bit 4-to-1 multiplexer                              : 1
  2-bit 2-to-1 multiplexer                              : 5
- 24-bit 2-to-1 multiplexer                             : 4
+ 24-bit 2-to-1 multiplexer                             : 5
+ 24-bit 4-to-1 multiplexer                             : 1
  27-bit 2-to-1 multiplexer                             : 1
- 28-bit 2-to-1 multiplexer                             : 1
- 28-bit 4-to-1 multiplexer                             : 1
  3-bit 2-to-1 multiplexer                              : 2
  32-bit 2-to-1 multiplexer                             : 8
  33-bit 2-to-1 multiplexer                             : 6
- 4-bit 2-to-1 multiplexer                              : 86
+ 4-bit 2-to-1 multiplexer                              : 92
  4-bit 8-to-1 multiplexer                              : 1
  6-bit 2-to-1 multiplexer                              : 9
  7-bit 2-to-1 multiplexer                              : 6
@@ -1267,7 +1265,7 @@ INFO:Xst:2261 - The FF/Latch <life/life_logic/M_colCtr_q_1> in Unit <mojo_top_0>
 
 Mapping all equations...
 Building and optimizing final netlist ...
-Found area constraint ratio of 100 (+ 0) on block mojo_top_0, actual ratio is 51.
+Found area constraint ratio of 100 (+ 0) on block mojo_top_0, actual ratio is 50.
 INFO:Xst:2260 - The FF/Latch <U0/ilmb/POR_FF_I> in Unit <uBlaze> is equivalent to the following FF/Latch : <U0/dlmb/POR_FF_I>
 INFO:Xst:2260 - The FF/Latch <U0/iomodule_0/IOModule_Core_I1/intr_ctrl_I1/cipr_rd_dff_all[31].fdr_i> in Unit <uBlaze> is equivalent to the following 29 FFs/Latches : <U0/iomodule_0/IOModule_Core_I1/intr_ctrl_I1/cipr_rd_dff_all[30].fdr_i> <U0/iomodule_0/IOModule_Core_I1/intr_ctrl_I1/cipr_rd_dff_all[29].fdr_i> <U0/iomodule_0/IOModule_Core_I1/intr_ctrl_I1/cipr_rd_dff_all[28].fdr_i> <U0/iomodule_0/IOModule_Core_I1/intr_ctrl_I1/cipr_rd_dff_all[27].fdr_i> <U0/iomodule_0/IOModule_Core_I1/intr_ctrl_I1/cipr_rd_dff_all[26].fdr_i> <U0/iomodule_0/IOModule_Core_I1/intr_ctrl_I1/cipr_rd_dff_all[25].fdr_i> <U0/iomodule_0/IOModule_Core_I1/intr_ctrl_I1/cipr_rd_dff_all[24].fdr_i> <U0/iomodule_0/IOModule_Core_I1/intr_ctrl_I1/cipr_rd_dff_all[23].fdr_i> <U0/iomodule_0/IOModule_Core_I1/intr_ctrl_I1/cipr_rd_dff_all[22].fdr_i> <U0/iomodule_0/IOModule_Core_I1/intr_ctrl_I1/cipr_rd_dff_all[21].fdr_i> <U0/iomodule_0/IOModule_Core_I1/intr_ctrl_I1/cipr_rd_dff_all[20].fdr_i>
    <U0/iomodule_0/IOModule_Core_I1/intr_ctrl_I1/cipr_rd_dff_all[19].fdr_i> <U0/iomodule_0/IOModule_Core_I1/intr_ctrl_I1/cipr_rd_dff_all[18].fdr_i> <U0/iomodule_0/IOModule_Core_I1/intr_ctrl_I1/cipr_rd_dff_all[17].fdr_i> <U0/iomodule_0/IOModule_Core_I1/intr_ctrl_I1/cipr_rd_dff_all[16].fdr_i> <U0/iomodule_0/IOModule_Core_I1/intr_ctrl_I1/cipr_rd_dff_all[15].fdr_i> <U0/iomodule_0/IOModule_Core_I1/intr_ctrl_I1/cipr_rd_dff_all[14].fdr_i> <U0/iomodule_0/IOModule_Core_I1/intr_ctrl_I1/cipr_rd_dff_all[13].fdr_i> <U0/iomodule_0/IOModule_Core_I1/intr_ctrl_I1/cipr_rd_dff_all[12].fdr_i> <U0/iomodule_0/IOModule_Core_I1/intr_ctrl_I1/cipr_rd_dff_all[11].fdr_i> <U0/iomodule_0/IOModule_Core_I1/intr_ctrl_I1/cipr_rd_dff_all[10].fdr_i> <U0/iomodule_0/IOModule_Core_I1/intr_ctrl_I1/cipr_rd_dff_all[9].fdr_i> <U0/iomodule_0/IOModule_Core_I1/intr_ctrl_I1/cipr_rd_dff_all[8].fdr_i> <U0/iomodule_0/IOModule_Core_I1/intr_ctrl_I1/cipr_rd_dff_all[6].fdr_i> <U0/iomodule_0/IOModule_Core_I1/intr_ctrl_I1/cipr_rd_dff_all[5].fdr_i>
@@ -1296,8 +1294,8 @@ Unit <mojo_top_0> processed.
 Final Register Report
 
 Macro Statistics
-# Registers                                            : 642
- Flip-Flops                                            : 642
+# Registers                                            : 640
+ Flip-Flops                                            : 640
 # Shift Registers                                      : 1
  3-bit shift register                                  : 1
 
@@ -1323,13 +1321,13 @@ Clock Information:
 -----------------------------------------------------------------------------------------------+---------------------------------+-------+
 Clock Signal                                                                                   | Clock buffer(FF name)           | Load  |
 -----------------------------------------------------------------------------------------------+---------------------------------+-------+
-clk_wiz/pll_base_inst/CLKOUT0                                                                  | BUFG                            | 613   |
+clk_wiz/pll_base_inst/CLKOUT0                                                                  | BUFG                            | 611   |
 clk_wiz/pll_base_inst/CLKOUT1                                                                  | BUFG                            | 423   |
 M_reg_regOut[0]_M_reg_regOut[1]_AND_253_o(M_reg_regOut[0]_M_reg_regOut[1]_AND_253_o<0>1:O)     | BUFG(*)(seed_31)                | 32    |
 lpfInValid(lpfInValid1:O)                                                                      | NONE(*)(lpfInData_13)           | 16    |
 clk_wiz/pll_base_inst/CLKOUT2                                                                  | BUFG                            | 1289  |
 clk_wiz/pll_base_inst/CLKOUT3                                                                  | BUFG                            | 816   |
-life/life_logic/M_calcstate_q[2]_GND_27_o_Mux_220_o(life/life_logic/M_calcstate_q__n0991<1>1:O)| NONE(*)(life/life_logic/state_2)| 5     |
+life/life_logic/M_calcstate_q[2]_GND_27_o_Mux_222_o(life/life_logic/M_calcstate_q__n0997<1>1:O)| NONE(*)(life/life_logic/state_1)| 5     |
 -----------------------------------------------------------------------------------------------+---------------------------------+-------+
 (*) These 3 clock signal(s) are generated by combinatorial logic,
 and XST is not able to identify which are the primary clock signals.
@@ -1350,7 +1348,7 @@ Speed Grade: -2
    Maximum combinational path delay: 6.110ns
 
 =========================================================================
-[Sat Dec  9 22:38:53 2017] synth_1 finished
+[Sun Dec 10 09:24:29 2017] synth_1 finished
 wait_on_run: Time (s): cpu = 00:00:24 ; elapsed = 00:00:24 . Memory (MB): peak = 154.199 ; gain = 4.000
 # launch_runs -runs impl_1
 Release 14.7 - ngc2edif P.20131013 (lin64)
@@ -1383,7 +1381,7 @@ WARNING:NetListWriters:306 - Signal bus M_reg_regOut[65 : 2] on block mojo_top_0
    is not reconstructed, because there are some missing bus signals.
   finished :Prep
 Writing EDIF netlist file mojo_top_0.edif ...
-ngc2edif: Total memory usage is 108404 kilobytes
+ngc2edif: Total memory usage is 108356 kilobytes
 
 Parsing EDIF File [/home/cody/mojo/test/work/planAhead/test/test.data/cache/mojo_top_0_ngc_fdcfe2dc.edif]
 Finished Parsing EDIF File [/home/cody/mojo/test/work/planAhead/test/test.data/cache/mojo_top_0_ngc_fdcfe2dc.edif]
@@ -1461,7 +1459,7 @@ Processing design ...
    Preping design's macros ...
   finished :Prep
 Writing EDIF netlist file lpfTest.edif ...
-ngc2edif: Total memory usage is 108736 kilobytes
+ngc2edif: Total memory usage is 108740 kilobytes
 
 Reading core file '/home/cody/mojo/test/work/planAhead/test/test.srcs/sources_1/imports/coreGen/lpfTest.ngc' for (cell view 'lpfTest', library 'mojo_top_0_lib', file 'mojo_top_0.ngc')
 Parsing EDIF File [/home/cody/mojo/test/work/planAhead/test/test.data/cache/lpfTest_ngc_e09e34d8.edif]
@@ -1506,7 +1504,7 @@ WARNING:NetListWriters:306 - Signal bus
    are some missing bus signals.
   finished :Prep
 Writing EDIF netlist file microblaze_mcs_v1_4.edif ...
-ngc2edif: Total memory usage is 108548 kilobytes
+ngc2edif: Total memory usage is 108544 kilobytes
 
 Reading core file '/home/cody/mojo/test/work/planAhead/test/test.srcs/sources_1/imports/coreGen/microblaze_mcs_v1_4.ngc' for (cell view 'microblaze_mcs_v1_4', library 'mojo_top_0_lib', file 'mojo_top_0.ngc')
 Parsing EDIF File [/home/cody/mojo/test/work/planAhead/test/test.data/cache/microblaze_mcs_v1_4_ngc_e09e34d8.edif]
@@ -1524,11 +1522,11 @@ Parsing UCF File [/home/cody/mojo/test/work/planAhead/test/test.srcs/constrs_1/i
 Finished Parsing UCF File [/home/cody/mojo/test/work/planAhead/test/test.srcs/constrs_1/imports/cody/mojo/test/constraint/pins.ucf]
 Parsing UCF File [/home/cody/mojo/test/work/planAhead/test/test.srcs/constrs_1/imports/cody/Downloads/mojo-ide-B1.3.6/library/components/mojo.ucf]
 Finished Parsing UCF File [/home/cody/mojo/test/work/planAhead/test/test.srcs/constrs_1/imports/cody/Downloads/mojo-ide-B1.3.6/library/components/mojo.ucf]
-[Sat Dec  9 22:39:04 2017] Launched impl_1...
+[Sun Dec 10 09:24:40 2017] Launched impl_1...
 Run output will be captured here: /home/cody/mojo/test/work/planAhead/test/test.runs/impl_1/runme.log
 launch_runs: Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 317.676 ; gain = 163.477
 # wait_on_run impl_1
-[Sat Dec  9 22:39:04 2017] Waiting for impl_1 to finish...
+[Sun Dec 10 09:24:40 2017] Waiting for impl_1 to finish...
 
 *** Running ngdbuild
     with args -intstyle ise -p xc6slx9tqg144-2 -dd _ngo -uc mojo_top_0.ucf mojo_top_0.edf
@@ -1876,51 +1874,51 @@ Total REAL time at the beginning of Placer: 10 secs
 Total CPU  time at the beginning of Placer: 10 secs
 
 Phase 1.1  Initial Placement Analysis
-Phase 1.1  Initial Placement Analysis (Checksum:eda85e98) REAL time: 11 secs
+Phase 1.1  Initial Placement Analysis (Checksum:85f297a0) REAL time: 11 secs
 
 Phase 2.7  Design Feasibility Check
-Phase 2.7  Design Feasibility Check (Checksum:eda85e98) REAL time: 11 secs
+Phase 2.7  Design Feasibility Check (Checksum:85f297a0) REAL time: 11 secs
 
 Phase 3.31  Local Placement Optimization
-Phase 3.31  Local Placement Optimization (Checksum:eda85e98) REAL time: 11 secs
+Phase 3.31  Local Placement Optimization (Checksum:85f297a0) REAL time: 11 secs
 
 Phase 4.2  Initial Placement for Architecture Specific Features
 
 Phase 4.2  Initial Placement for Architecture Specific Features
-(Checksum:4e37401b) REAL time: 16 secs
+(Checksum:1f472b27) REAL time: 15 secs
 
 Phase 5.36  Local Placement Optimization
-Phase 5.36  Local Placement Optimization (Checksum:4e37401b) REAL time: 16 secs
+Phase 5.36  Local Placement Optimization (Checksum:1f472b27) REAL time: 15 secs
 
 Phase 6.30  Global Clock Region Assignment
-Phase 6.30  Global Clock Region Assignment (Checksum:4e37401b) REAL time: 16 secs
+Phase 6.30  Global Clock Region Assignment (Checksum:1f472b27) REAL time: 15 secs
 
 Phase 7.3  Local Placement Optimization
 
-Phase 7.3  Local Placement Optimization (Checksum:e373f0eb) REAL time: 16 secs
+Phase 7.3  Local Placement Optimization (Checksum:dd289275) REAL time: 15 secs
 
 Phase 8.5  Local Placement Optimization
-Phase 8.5  Local Placement Optimization (Checksum:e373f0eb) REAL time: 16 secs
+Phase 8.5  Local Placement Optimization (Checksum:dd289275) REAL time: 16 secs
 
 Phase 9.8  Global Placement
-.......................
-................................
-..................................................
-................................................................................................................................
-................................................
-Phase 9.8  Global Placement (Checksum:44ccb9e2) REAL time: 37 secs
+....................
+...........................................
+.....................................................................................................................................................................
+.............................................................................................................
+...................
+Phase 9.8  Global Placement (Checksum:46abd79d) REAL time: 37 secs
 
 Phase 10.5  Local Placement Optimization
-Phase 10.5  Local Placement Optimization (Checksum:44ccb9e2) REAL time: 37 secs
+Phase 10.5  Local Placement Optimization (Checksum:46abd79d) REAL time: 37 secs
 
 Phase 11.18  Placement Optimization
-Phase 11.18  Placement Optimization (Checksum:422d5ee5) REAL time: 41 secs
+Phase 11.18  Placement Optimization (Checksum:2188240e) REAL time: 41 secs
 
 Phase 12.5  Local Placement Optimization
-Phase 12.5  Local Placement Optimization (Checksum:422d5ee5) REAL time: 41 secs
+Phase 12.5  Local Placement Optimization (Checksum:2188240e) REAL time: 41 secs
 
 Phase 13.34  Placement Validation
-Phase 13.34  Placement Validation (Checksum:a59a4a3) REAL time: 42 secs
+Phase 13.34  Placement Validation (Checksum:db24dc67) REAL time: 42 secs
 
 Total REAL time to Placer completion: 42 secs
 Total CPU  time to Placer completion: 43 secs
@@ -1931,16 +1929,16 @@ Design Summary:
 Number of errors:      0
 Number of warnings:    3
 Slice Logic Utilization:
-  Number of Slice Registers:                 2,437 out of  11,440   21%
-    Number used as Flip Flops:               2,387
+  Number of Slice Registers:                 2,435 out of  11,440   21%
+    Number used as Flip Flops:               2,385
     Number used as Latches:                     48
     Number used as Latch-thrus:                  0
     Number used as AND/OR logics:                2
-  Number of Slice LUTs:                      2,689 out of   5,720   47%
-    Number used as logic:                    2,297 out of   5,720   40%
-      Number using O6 output only:           1,489
-      Number using O5 output only:             118
-      Number using O5 and O6:                  690
+  Number of Slice LUTs:                      2,677 out of   5,720   46%
+    Number used as logic:                    2,292 out of   5,720   40%
+      Number using O6 output only:           1,492
+      Number using O5 output only:             114
+      Number using O5 and O6:                  686
       Number used as ROM:                        0
     Number used as Memory:                     310 out of   1,440   21%
       Number used as Dual Port RAM:             74
@@ -1955,21 +1953,21 @@ Slice Logic Utilization:
         Number using O6 output only:            46
         Number using O5 output only:             0
         Number using O5 and O6:                176
-    Number used exclusively as route-thrus:     82
-      Number with same-slice register load:     75
+    Number used exclusively as route-thrus:     75
+      Number with same-slice register load:     68
       Number with same-slice carry load:         7
       Number with other load:                    0
 
 Slice Logic Distribution:
-  Number of occupied Slices:                 1,018 out of   1,430   71%
-  Number of MUXCYs used:                       412 out of   2,860   14%
-  Number of LUT Flip Flop pairs used:        3,188
-    Number with an unused Flip Flop:         1,201 out of   3,188   37%
-    Number with an unused LUT:                 499 out of   3,188   15%
-    Number of fully used LUT-FF pairs:       1,488 out of   3,188   46%
+  Number of occupied Slices:                 1,001 out of   1,430   70%
+  Number of MUXCYs used:                       408 out of   2,860   14%
+  Number of LUT Flip Flop pairs used:        3,142
+    Number with an unused Flip Flop:         1,155 out of   3,142   36%
+    Number with an unused LUT:                 465 out of   3,142   14%
+    Number of fully used LUT-FF pairs:       1,522 out of   3,142   48%
     Number of unique control sets:             156
     Number of slice register sites lost
-      to control set restrictions:             413 out of  11,440    3%
+      to control set restrictions:             415 out of  11,440    3%
 
   A LUT Flip Flop pair for this architecture represents one LUT paired with
   one Flip Flop within a slice.  A control set is a unique combination of
@@ -2014,7 +2012,7 @@ Specific Feature Utilization:
   Number of STARTUPs:                            0 out of       1    0%
   Number of SUSPEND_SYNCs:                       0 out of       1    0%
 
-Average Fanout of Non-Clock Nets:                3.45
+Average Fanout of Non-Clock Nets:                3.44
 
 Peak Memory Usage:  826 MB
 Total REAL time to MAP completion:  45 secs
@@ -2044,16 +2042,16 @@ Device speed data version:  "PRODUCTION 1.23 2013-10-13".
 Device Utilization Summary:
 
 Slice Logic Utilization:
-  Number of Slice Registers:                 2,437 out of  11,440   21%
-    Number used as Flip Flops:               2,387
+  Number of Slice Registers:                 2,435 out of  11,440   21%
+    Number used as Flip Flops:               2,385
     Number used as Latches:                     48
     Number used as Latch-thrus:                  0
     Number used as AND/OR logics:                2
-  Number of Slice LUTs:                      2,689 out of   5,720   47%
-    Number used as logic:                    2,297 out of   5,720   40%
-      Number using O6 output only:           1,489
-      Number using O5 output only:             118
-      Number using O5 and O6:                  690
+  Number of Slice LUTs:                      2,677 out of   5,720   46%
+    Number used as logic:                    2,292 out of   5,720   40%
+      Number using O6 output only:           1,492
+      Number using O5 output only:             114
+      Number using O5 and O6:                  686
       Number used as ROM:                        0
     Number used as Memory:                     310 out of   1,440   21%
       Number used as Dual Port RAM:             74
@@ -2068,18 +2066,18 @@ Slice Logic Utilization:
         Number using O6 output only:            46
         Number using O5 output only:             0
         Number using O5 and O6:                176
-    Number used exclusively as route-thrus:     82
-      Number with same-slice register load:     75
+    Number used exclusively as route-thrus:     75
+      Number with same-slice register load:     68
       Number with same-slice carry load:         7
       Number with other load:                    0
 
 Slice Logic Distribution:
-  Number of occupied Slices:                 1,018 out of   1,430   71%
-  Number of MUXCYs used:                       412 out of   2,860   14%
-  Number of LUT Flip Flop pairs used:        3,188
-    Number with an unused Flip Flop:         1,201 out of   3,188   37%
-    Number with an unused LUT:                 499 out of   3,188   15%
-    Number of fully used LUT-FF pairs:       1,488 out of   3,188   46%
+  Number of occupied Slices:                 1,001 out of   1,430   70%
+  Number of MUXCYs used:                       408 out of   2,860   14%
+  Number of LUT Flip Flop pairs used:        3,142
+    Number with an unused Flip Flop:         1,155 out of   3,142   36%
+    Number with an unused LUT:                 465 out of   3,142   14%
+    Number of fully used LUT-FF pairs:       1,522 out of   3,142   48%
     Number of slice register sites lost
       to control set restrictions:               0 out of  11,440    0%
 
@@ -2135,29 +2133,29 @@ WARNING:Par:288 - The signal spi_mosi_IBUF has no load.  PAR will not attempt to
 Starting Multi-threaded Router
 
 
-Phase  1  : 19229 unrouted;      REAL time: 6 secs
+Phase  1  : 19167 unrouted;      REAL time: 6 secs
 
-Phase  2  : 15429 unrouted;      REAL time: 7 secs
+Phase  2  : 15387 unrouted;      REAL time: 6 secs
 
-Phase  3  : 6922 unrouted;      REAL time: 10 secs
+Phase  3  : 6894 unrouted;      REAL time: 10 secs
 
-Phase  4  : 6936 unrouted; (Setup:0, Hold:830, Component Switching Limit:0)     REAL time: 11 secs
+Phase  4  : 6896 unrouted; (Setup:0, Hold:3134, Component Switching Limit:0)     REAL time: 11 secs
 
 Updating file: mojo_top_0_routed.ncd with current fully routed design.
 
-Phase  5  : 0 unrouted; (Setup:0, Hold:829, Component Switching Limit:0)     REAL time: 17 secs
+Phase  5  : 0 unrouted; (Setup:0, Hold:2411, Component Switching Limit:0)     REAL time: 17 secs
 
-Phase  6  : 0 unrouted; (Setup:0, Hold:829, Component Switching Limit:0)     REAL time: 17 secs
+Phase  6  : 0 unrouted; (Setup:0, Hold:2411, Component Switching Limit:0)     REAL time: 17 secs
 
-Phase  7  : 0 unrouted; (Setup:0, Hold:829, Component Switching Limit:0)     REAL time: 17 secs
+Phase  7  : 0 unrouted; (Setup:0, Hold:2411, Component Switching Limit:0)     REAL time: 17 secs
 
-Phase  8  : 0 unrouted; (Setup:0, Hold:829, Component Switching Limit:0)     REAL time: 17 secs
+Phase  8  : 0 unrouted; (Setup:0, Hold:2411, Component Switching Limit:0)     REAL time: 17 secs
 
-Phase  9  : 0 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 17 secs
+Phase  9  : 0 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 18 secs
 
-Phase 10  : 0 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 18 secs
-Total REAL time to Router completion: 18 secs
-Total CPU time to Router completion (all processors): 24 secs
+Phase 10  : 0 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 19 secs
+Total REAL time to Router completion: 19 secs
+Total CPU time to Router completion (all processors): 25 secs
 
 Generating "PAR" statistics.
 
@@ -2168,23 +2166,23 @@ Generating Clock Report
 +---------------------+--------------+------+------+------------+-------------+
 |        Clock Net    |   Resource   |Locked|Fanout|Net Skew(ns)|Max Delay(ns)|
 +---------------------+--------------+------+------+------------+-------------+
-|  M_clk_wiz_CLK_OUT3 |  BUFGMUX_X2Y2| No   |  203 |  0.120     |  1.511      |
+|  M_clk_wiz_CLK_OUT3 |  BUFGMUX_X2Y2| No   |  203 |  0.119     |  1.510      |
 +---------------------+--------------+------+------+------------+-------------+
-|  M_clk_wiz_CLK_OUT2 |  BUFGMUX_X2Y4| No   |  130 |  0.135     |  1.527      |
+|  M_clk_wiz_CLK_OUT2 |  BUFGMUX_X2Y4| No   |  130 |  0.136     |  1.527      |
 +---------------------+--------------+------+------+------------+-------------+
-|  M_clk_wiz_CLK_OUT4 | BUFGMUX_X3Y13| No   |  282 |  0.121     |  1.512      |
+|  M_clk_wiz_CLK_OUT4 | BUFGMUX_X3Y13| No   |  276 |  0.119     |  1.510      |
 +---------------------+--------------+------+------+------------+-------------+
-|  M_clk_wiz_CLK_OUT1 |  BUFGMUX_X2Y1| No   |  220 |  0.757     |  2.148      |
+|  M_clk_wiz_CLK_OUT1 |  BUFGMUX_X2Y1| No   |  218 |  0.741     |  2.150      |
 +---------------------+--------------+------+------+------------+-------------+
 |M_reg_regOut[0]_M_re |              |      |      |            |             |
 |g_regOut[1]_AND_253_ |              |      |      |            |             |
-|              o_BUFG |  BUFGMUX_X2Y3| No   |    8 |  0.016     |  1.408      |
-+---------------------+--------------+------+------+------------+-------------+
-|          lpfInValid |         Local|      |    6 |  0.083     |  0.919      |
+|              o_BUFG |  BUFGMUX_X2Y3| No   |    8 |  0.012     |  1.444      |
 +---------------------+--------------+------+------+------------+-------------+
 |life/life_logic/M_ca |              |      |      |            |             |
 |lcstate_q[2]_GND_27_ |              |      |      |            |             |
-|         o_Mux_220_o |         Local|      |    5 |  0.361     |  1.847      |
+|         o_Mux_222_o |         Local|      |    5 |  0.361     |  2.039      |
++---------------------+--------------+------+------+------------+-------------+
+|          lpfInValid |         Local|      |    6 |  0.232     |  1.099      |
 +---------------------+--------------+------+------+------------+-------------+
 
 * Net Skew is the difference between the minimum and maximum routing
@@ -2206,20 +2204,20 @@ Asterisk (*) preceding a constraint indicates it was not met.
   Constraint                                |    Check    | Worst Case |  Best Case | Timing |   Timing
                                             |             |    Slack   | Achievable | Errors |    Score
 ----------------------------------------------------------------------------------------------------------
-  TS_clk_wiz_clkout2 = PERIOD TIMEGRP "clk_ | SETUP       |     0.051ns|     3.949ns|       0|           0
-  wiz_clkout2" TS_clk * 5 HIGH 50%          | HOLD        |     0.027ns|            |       0|           0
+  TS_clk_wiz_clkout0 = PERIOD TIMEGRP "clk_ | SETUP       |     0.179ns|    19.105ns|       0|           0
+  wiz_clkout0" TS_clk HIGH 50%              | HOLD        |     0.012ns|            |       0|           0
 ----------------------------------------------------------------------------------------------------------
-  TS_clk_wiz_clkout0 = PERIOD TIMEGRP "clk_ | SETUP       |     0.152ns|    19.240ns|       0|           0
-  wiz_clkout0" TS_clk HIGH 50%              | HOLD        |     0.008ns|            |       0|           0
+  TS_clk_wiz_clkout2 = PERIOD TIMEGRP "clk_ | SETUP       |     0.190ns|     3.810ns|       0|           0
+  wiz_clkout2" TS_clk * 5 HIGH 50%          | HOLD        |     0.035ns|            |       0|           0
 ----------------------------------------------------------------------------------------------------------
-  TS_clk_wiz_clkout3 = PERIOD TIMEGRP "clk_ | SETUP       |     0.714ns|     9.286ns|       0|           0
-  wiz_clkout3" TS_clk * 2 HIGH 50%          | HOLD        |     0.359ns|            |       0|           0
+  TS_clk_wiz_clkout3 = PERIOD TIMEGRP "clk_ | SETUP       |     0.624ns|     9.376ns|       0|           0
+  wiz_clkout3" TS_clk * 2 HIGH 50%          | HOLD        |     0.318ns|            |       0|           0
 ----------------------------------------------------------------------------------------------------------
   TS_clk = PERIOD TIMEGRP "clk" 50 MHz HIGH | MINLOWPULSE |    15.000ns|     5.000ns|       0|           0
    50%                                      |             |            |            |        |
 ----------------------------------------------------------------------------------------------------------
-  TS_clk_wiz_clkout1 = PERIOD TIMEGRP "clk_ | SETUP       |    80.089ns|    19.911ns|       0|           0
-  wiz_clkout1" TS_clk * 0.2 HIGH 50%        | HOLD        |     0.304ns|            |       0|           0
+  TS_clk_wiz_clkout1 = PERIOD TIMEGRP "clk_ | SETUP       |    82.053ns|    17.947ns|       0|           0
+  wiz_clkout1" TS_clk * 0.2 HIGH 50%        | HOLD        |     0.336ns|            |       0|           0
                                             | MINPERIOD   |    50.000ns|    50.000ns|       0|           0
 ----------------------------------------------------------------------------------------------------------
 
@@ -2234,11 +2232,11 @@ Derived Constraints for TS_clk
 |           Constraint          | Requirement |-------------+-------------|-------------+-------------|-------------+-------------|
 |                               |             |   Direct    | Derivative  |   Direct    | Derivative  |   Direct    | Derivative  |
 +-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-|TS_clk                         |     20.000ns|      5.000ns|     19.745ns|            0|            0|            0|       225462|
-| TS_clk_wiz_clkout3            |     10.000ns|      9.286ns|          N/A|            0|            0|       110454|            0|
+|TS_clk                         |     20.000ns|      5.000ns|     19.105ns|            0|            0|            0|       228406|
+| TS_clk_wiz_clkout0            |     20.000ns|     19.105ns|          N/A|            0|            0|        35587|            0|
+| TS_clk_wiz_clkout2            |      4.000ns|      3.810ns|          N/A|            0|            0|         4695|            0|
+| TS_clk_wiz_clkout3            |     10.000ns|      9.376ns|          N/A|            0|            0|       110454|            0|
 | TS_clk_wiz_clkout1            |    100.000ns|     50.000ns|          N/A|            0|            0|        77670|            0|
-| TS_clk_wiz_clkout0            |     20.000ns|     19.240ns|          N/A|            0|            0|        32643|            0|
-| TS_clk_wiz_clkout2            |      4.000ns|      3.949ns|          N/A|            0|            0|         4695|            0|
 +-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
 
 All constraints were met.
@@ -2250,10 +2248,10 @@ All signals are completely routed.
 
 WARNING:Par:283 - There are 1 loadless signals in this design. This design will cause Bitgen to issue DRC warnings.
 
-Total REAL time to PAR completion: 19 secs
-Total CPU time to PAR completion (all processors): 25 secs
+Total REAL time to PAR completion: 20 secs
+Total CPU time to PAR completion (all processors): 26 secs
 
-Peak Memory Usage:  812 MB
+Peak Memory Usage:  814 MB
 
 Placer: Placement generated during map.
 Routing: Completed - No errors found.
@@ -2276,7 +2274,7 @@ Loading device for application Rf_Device from file '6slx9.nph' in environment
 /opt/Xilinx/14.7/ISE_DS/ISE/.
    "mojo_top_0" is an NCD, version 3.2, device xc6slx9, package tqg144, speed -2
 
-Analysis completed Sat Dec  9 22:40:41 2017
+Analysis completed Sun Dec 10 09:26:17 2017
 --------------------------------------------------------------------------------
 
 Generating Report ...
@@ -2294,13 +2292,13 @@ WARNING:XDL:213 - The resulting xdl output will not have LUT equation strings or
 Loading device for application Rf_Device from file '6slx9.nph' in environment /opt/Xilinx/14.7/ISE_DS/ISE/.
    "mojo_top_0" is an NCD, version 3.2, device xc6slx9, package tqg144, speed -2
 Successfully converted design 'mojo_top_0_routed.ncd' to 'mojo_top_0_routed.xdl'.
-[Sat Dec  9 22:40:46 2017] impl_1 finished
-wait_on_run: Time (s): cpu = 00:01:44 ; elapsed = 00:01:42 . Memory (MB): peak = 317.676 ; gain = 0.000
+[Sun Dec 10 09:26:22 2017] impl_1 finished
+wait_on_run: Time (s): cpu = 00:01:46 ; elapsed = 00:01:43 . Memory (MB): peak = 321.676 ; gain = 4.000
 # launch_runs impl_1 -to_step Bitgen
-[Sat Dec  9 22:40:46 2017] Launched impl_1...
+[Sun Dec 10 09:26:22 2017] Launched impl_1...
 Run output will be captured here: /home/cody/mojo/test/work/planAhead/test/test.runs/impl_1/runme.log
 # wait_on_run impl_1
-[Sat Dec  9 22:40:46 2017] Waiting for impl_1 to finish...
+[Sun Dec 10 09:26:22 2017] Waiting for impl_1 to finish...
 
 *** Running ngdbuild
     with args -intstyle ise -p xc6slx9tqg144-2 -dd _ngo -uc mojo_top_0.ucf mojo_top_0.edf
@@ -2648,51 +2646,51 @@ Total REAL time at the beginning of Placer: 10 secs
 Total CPU  time at the beginning of Placer: 10 secs
 
 Phase 1.1  Initial Placement Analysis
-Phase 1.1  Initial Placement Analysis (Checksum:eda85e98) REAL time: 11 secs
+Phase 1.1  Initial Placement Analysis (Checksum:85f297a0) REAL time: 11 secs
 
 Phase 2.7  Design Feasibility Check
-Phase 2.7  Design Feasibility Check (Checksum:eda85e98) REAL time: 11 secs
+Phase 2.7  Design Feasibility Check (Checksum:85f297a0) REAL time: 11 secs
 
 Phase 3.31  Local Placement Optimization
-Phase 3.31  Local Placement Optimization (Checksum:eda85e98) REAL time: 11 secs
+Phase 3.31  Local Placement Optimization (Checksum:85f297a0) REAL time: 11 secs
 
 Phase 4.2  Initial Placement for Architecture Specific Features
 
 Phase 4.2  Initial Placement for Architecture Specific Features
-(Checksum:4e37401b) REAL time: 16 secs
+(Checksum:1f472b27) REAL time: 15 secs
 
 Phase 5.36  Local Placement Optimization
-Phase 5.36  Local Placement Optimization (Checksum:4e37401b) REAL time: 16 secs
+Phase 5.36  Local Placement Optimization (Checksum:1f472b27) REAL time: 15 secs
 
 Phase 6.30  Global Clock Region Assignment
-Phase 6.30  Global Clock Region Assignment (Checksum:4e37401b) REAL time: 16 secs
+Phase 6.30  Global Clock Region Assignment (Checksum:1f472b27) REAL time: 15 secs
 
 Phase 7.3  Local Placement Optimization
 
-Phase 7.3  Local Placement Optimization (Checksum:e373f0eb) REAL time: 16 secs
+Phase 7.3  Local Placement Optimization (Checksum:dd289275) REAL time: 15 secs
 
 Phase 8.5  Local Placement Optimization
-Phase 8.5  Local Placement Optimization (Checksum:e373f0eb) REAL time: 16 secs
+Phase 8.5  Local Placement Optimization (Checksum:dd289275) REAL time: 16 secs
 
 Phase 9.8  Global Placement
-.......................
-................................
-..................................................
-................................................................................................................................
-................................................
-Phase 9.8  Global Placement (Checksum:44ccb9e2) REAL time: 37 secs
+....................
+...........................................
+.....................................................................................................................................................................
+.............................................................................................................
+...................
+Phase 9.8  Global Placement (Checksum:46abd79d) REAL time: 37 secs
 
 Phase 10.5  Local Placement Optimization
-Phase 10.5  Local Placement Optimization (Checksum:44ccb9e2) REAL time: 37 secs
+Phase 10.5  Local Placement Optimization (Checksum:46abd79d) REAL time: 37 secs
 
 Phase 11.18  Placement Optimization
-Phase 11.18  Placement Optimization (Checksum:422d5ee5) REAL time: 41 secs
+Phase 11.18  Placement Optimization (Checksum:2188240e) REAL time: 41 secs
 
 Phase 12.5  Local Placement Optimization
-Phase 12.5  Local Placement Optimization (Checksum:422d5ee5) REAL time: 41 secs
+Phase 12.5  Local Placement Optimization (Checksum:2188240e) REAL time: 41 secs
 
 Phase 13.34  Placement Validation
-Phase 13.34  Placement Validation (Checksum:a59a4a3) REAL time: 42 secs
+Phase 13.34  Placement Validation (Checksum:db24dc67) REAL time: 42 secs
 
 Total REAL time to Placer completion: 42 secs
 Total CPU  time to Placer completion: 43 secs
@@ -2703,16 +2701,16 @@ Design Summary:
 Number of errors:      0
 Number of warnings:    3
 Slice Logic Utilization:
-  Number of Slice Registers:                 2,437 out of  11,440   21%
-    Number used as Flip Flops:               2,387
+  Number of Slice Registers:                 2,435 out of  11,440   21%
+    Number used as Flip Flops:               2,385
     Number used as Latches:                     48
     Number used as Latch-thrus:                  0
     Number used as AND/OR logics:                2
-  Number of Slice LUTs:                      2,689 out of   5,720   47%
-    Number used as logic:                    2,297 out of   5,720   40%
-      Number using O6 output only:           1,489
-      Number using O5 output only:             118
-      Number using O5 and O6:                  690
+  Number of Slice LUTs:                      2,677 out of   5,720   46%
+    Number used as logic:                    2,292 out of   5,720   40%
+      Number using O6 output only:           1,492
+      Number using O5 output only:             114
+      Number using O5 and O6:                  686
       Number used as ROM:                        0
     Number used as Memory:                     310 out of   1,440   21%
       Number used as Dual Port RAM:             74
@@ -2727,21 +2725,21 @@ Slice Logic Utilization:
         Number using O6 output only:            46
         Number using O5 output only:             0
         Number using O5 and O6:                176
-    Number used exclusively as route-thrus:     82
-      Number with same-slice register load:     75
+    Number used exclusively as route-thrus:     75
+      Number with same-slice register load:     68
       Number with same-slice carry load:         7
       Number with other load:                    0
 
 Slice Logic Distribution:
-  Number of occupied Slices:                 1,018 out of   1,430   71%
-  Number of MUXCYs used:                       412 out of   2,860   14%
-  Number of LUT Flip Flop pairs used:        3,188
-    Number with an unused Flip Flop:         1,201 out of   3,188   37%
-    Number with an unused LUT:                 499 out of   3,188   15%
-    Number of fully used LUT-FF pairs:       1,488 out of   3,188   46%
+  Number of occupied Slices:                 1,001 out of   1,430   70%
+  Number of MUXCYs used:                       408 out of   2,860   14%
+  Number of LUT Flip Flop pairs used:        3,142
+    Number with an unused Flip Flop:         1,155 out of   3,142   36%
+    Number with an unused LUT:                 465 out of   3,142   14%
+    Number of fully used LUT-FF pairs:       1,522 out of   3,142   48%
     Number of unique control sets:             156
     Number of slice register sites lost
-      to control set restrictions:             413 out of  11,440    3%
+      to control set restrictions:             415 out of  11,440    3%
 
   A LUT Flip Flop pair for this architecture represents one LUT paired with
   one Flip Flop within a slice.  A control set is a unique combination of
@@ -2786,7 +2784,7 @@ Specific Feature Utilization:
   Number of STARTUPs:                            0 out of       1    0%
   Number of SUSPEND_SYNCs:                       0 out of       1    0%
 
-Average Fanout of Non-Clock Nets:                3.45
+Average Fanout of Non-Clock Nets:                3.44
 
 Peak Memory Usage:  826 MB
 Total REAL time to MAP completion:  45 secs
@@ -2816,16 +2814,16 @@ Device speed data version:  "PRODUCTION 1.23 2013-10-13".
 Device Utilization Summary:
 
 Slice Logic Utilization:
-  Number of Slice Registers:                 2,437 out of  11,440   21%
-    Number used as Flip Flops:               2,387
+  Number of Slice Registers:                 2,435 out of  11,440   21%
+    Number used as Flip Flops:               2,385
     Number used as Latches:                     48
     Number used as Latch-thrus:                  0
     Number used as AND/OR logics:                2
-  Number of Slice LUTs:                      2,689 out of   5,720   47%
-    Number used as logic:                    2,297 out of   5,720   40%
-      Number using O6 output only:           1,489
-      Number using O5 output only:             118
-      Number using O5 and O6:                  690
+  Number of Slice LUTs:                      2,677 out of   5,720   46%
+    Number used as logic:                    2,292 out of   5,720   40%
+      Number using O6 output only:           1,492
+      Number using O5 output only:             114
+      Number using O5 and O6:                  686
       Number used as ROM:                        0
     Number used as Memory:                     310 out of   1,440   21%
       Number used as Dual Port RAM:             74
@@ -2840,18 +2838,18 @@ Slice Logic Utilization:
         Number using O6 output only:            46
         Number using O5 output only:             0
         Number using O5 and O6:                176
-    Number used exclusively as route-thrus:     82
-      Number with same-slice register load:     75
+    Number used exclusively as route-thrus:     75
+      Number with same-slice register load:     68
       Number with same-slice carry load:         7
       Number with other load:                    0
 
 Slice Logic Distribution:
-  Number of occupied Slices:                 1,018 out of   1,430   71%
-  Number of MUXCYs used:                       412 out of   2,860   14%
-  Number of LUT Flip Flop pairs used:        3,188
-    Number with an unused Flip Flop:         1,201 out of   3,188   37%
-    Number with an unused LUT:                 499 out of   3,188   15%
-    Number of fully used LUT-FF pairs:       1,488 out of   3,188   46%
+  Number of occupied Slices:                 1,001 out of   1,430   70%
+  Number of MUXCYs used:                       408 out of   2,860   14%
+  Number of LUT Flip Flop pairs used:        3,142
+    Number with an unused Flip Flop:         1,155 out of   3,142   36%
+    Number with an unused LUT:                 465 out of   3,142   14%
+    Number of fully used LUT-FF pairs:       1,522 out of   3,142   48%
     Number of slice register sites lost
       to control set restrictions:               0 out of  11,440    0%
 
@@ -2907,29 +2905,29 @@ WARNING:Par:288 - The signal spi_mosi_IBUF has no load.  PAR will not attempt to
 Starting Multi-threaded Router
 
 
-Phase  1  : 19229 unrouted;      REAL time: 6 secs
+Phase  1  : 19167 unrouted;      REAL time: 6 secs
 
-Phase  2  : 15429 unrouted;      REAL time: 7 secs
+Phase  2  : 15387 unrouted;      REAL time: 6 secs
 
-Phase  3  : 6922 unrouted;      REAL time: 10 secs
+Phase  3  : 6894 unrouted;      REAL time: 10 secs
 
-Phase  4  : 6936 unrouted; (Setup:0, Hold:830, Component Switching Limit:0)     REAL time: 11 secs
+Phase  4  : 6896 unrouted; (Setup:0, Hold:3134, Component Switching Limit:0)     REAL time: 11 secs
 
 Updating file: mojo_top_0_routed.ncd with current fully routed design.
 
-Phase  5  : 0 unrouted; (Setup:0, Hold:829, Component Switching Limit:0)     REAL time: 17 secs
+Phase  5  : 0 unrouted; (Setup:0, Hold:2411, Component Switching Limit:0)     REAL time: 17 secs
 
-Phase  6  : 0 unrouted; (Setup:0, Hold:829, Component Switching Limit:0)     REAL time: 17 secs
+Phase  6  : 0 unrouted; (Setup:0, Hold:2411, Component Switching Limit:0)     REAL time: 17 secs
 
-Phase  7  : 0 unrouted; (Setup:0, Hold:829, Component Switching Limit:0)     REAL time: 17 secs
+Phase  7  : 0 unrouted; (Setup:0, Hold:2411, Component Switching Limit:0)     REAL time: 17 secs
 
-Phase  8  : 0 unrouted; (Setup:0, Hold:829, Component Switching Limit:0)     REAL time: 17 secs
+Phase  8  : 0 unrouted; (Setup:0, Hold:2411, Component Switching Limit:0)     REAL time: 17 secs
 
-Phase  9  : 0 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 17 secs
+Phase  9  : 0 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 18 secs
 
-Phase 10  : 0 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 18 secs
-Total REAL time to Router completion: 18 secs
-Total CPU time to Router completion (all processors): 24 secs
+Phase 10  : 0 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 19 secs
+Total REAL time to Router completion: 19 secs
+Total CPU time to Router completion (all processors): 25 secs
 
 Generating "PAR" statistics.
 
@@ -2940,23 +2938,23 @@ Generating Clock Report
 +---------------------+--------------+------+------+------------+-------------+
 |        Clock Net    |   Resource   |Locked|Fanout|Net Skew(ns)|Max Delay(ns)|
 +---------------------+--------------+------+------+------------+-------------+
-|  M_clk_wiz_CLK_OUT3 |  BUFGMUX_X2Y2| No   |  203 |  0.120     |  1.511      |
+|  M_clk_wiz_CLK_OUT3 |  BUFGMUX_X2Y2| No   |  203 |  0.119     |  1.510      |
 +---------------------+--------------+------+------+------------+-------------+
-|  M_clk_wiz_CLK_OUT2 |  BUFGMUX_X2Y4| No   |  130 |  0.135     |  1.527      |
+|  M_clk_wiz_CLK_OUT2 |  BUFGMUX_X2Y4| No   |  130 |  0.136     |  1.527      |
 +---------------------+--------------+------+------+------------+-------------+
-|  M_clk_wiz_CLK_OUT4 | BUFGMUX_X3Y13| No   |  282 |  0.121     |  1.512      |
+|  M_clk_wiz_CLK_OUT4 | BUFGMUX_X3Y13| No   |  276 |  0.119     |  1.510      |
 +---------------------+--------------+------+------+------------+-------------+
-|  M_clk_wiz_CLK_OUT1 |  BUFGMUX_X2Y1| No   |  220 |  0.757     |  2.148      |
+|  M_clk_wiz_CLK_OUT1 |  BUFGMUX_X2Y1| No   |  218 |  0.741     |  2.150      |
 +---------------------+--------------+------+------+------------+-------------+
 |M_reg_regOut[0]_M_re |              |      |      |            |             |
 |g_regOut[1]_AND_253_ |              |      |      |            |             |
-|              o_BUFG |  BUFGMUX_X2Y3| No   |    8 |  0.016     |  1.408      |
-+---------------------+--------------+------+------+------------+-------------+
-|          lpfInValid |         Local|      |    6 |  0.083     |  0.919      |
+|              o_BUFG |  BUFGMUX_X2Y3| No   |    8 |  0.012     |  1.444      |
 +---------------------+--------------+------+------+------------+-------------+
 |life/life_logic/M_ca |              |      |      |            |             |
 |lcstate_q[2]_GND_27_ |              |      |      |            |             |
-|         o_Mux_220_o |         Local|      |    5 |  0.361     |  1.847      |
+|         o_Mux_222_o |         Local|      |    5 |  0.361     |  2.039      |
++---------------------+--------------+------+------+------------+-------------+
+|          lpfInValid |         Local|      |    6 |  0.232     |  1.099      |
 +---------------------+--------------+------+------+------------+-------------+
 
 * Net Skew is the difference between the minimum and maximum routing
@@ -2978,20 +2976,20 @@ Asterisk (*) preceding a constraint indicates it was not met.
   Constraint                                |    Check    | Worst Case |  Best Case | Timing |   Timing
                                             |             |    Slack   | Achievable | Errors |    Score
 ----------------------------------------------------------------------------------------------------------
-  TS_clk_wiz_clkout2 = PERIOD TIMEGRP "clk_ | SETUP       |     0.051ns|     3.949ns|       0|           0
-  wiz_clkout2" TS_clk * 5 HIGH 50%          | HOLD        |     0.027ns|            |       0|           0
+  TS_clk_wiz_clkout0 = PERIOD TIMEGRP "clk_ | SETUP       |     0.179ns|    19.105ns|       0|           0
+  wiz_clkout0" TS_clk HIGH 50%              | HOLD        |     0.012ns|            |       0|           0
 ----------------------------------------------------------------------------------------------------------
-  TS_clk_wiz_clkout0 = PERIOD TIMEGRP "clk_ | SETUP       |     0.152ns|    19.240ns|       0|           0
-  wiz_clkout0" TS_clk HIGH 50%              | HOLD        |     0.008ns|            |       0|           0
+  TS_clk_wiz_clkout2 = PERIOD TIMEGRP "clk_ | SETUP       |     0.190ns|     3.810ns|       0|           0
+  wiz_clkout2" TS_clk * 5 HIGH 50%          | HOLD        |     0.035ns|            |       0|           0
 ----------------------------------------------------------------------------------------------------------
-  TS_clk_wiz_clkout3 = PERIOD TIMEGRP "clk_ | SETUP       |     0.714ns|     9.286ns|       0|           0
-  wiz_clkout3" TS_clk * 2 HIGH 50%          | HOLD        |     0.359ns|            |       0|           0
+  TS_clk_wiz_clkout3 = PERIOD TIMEGRP "clk_ | SETUP       |     0.624ns|     9.376ns|       0|           0
+  wiz_clkout3" TS_clk * 2 HIGH 50%          | HOLD        |     0.318ns|            |       0|           0
 ----------------------------------------------------------------------------------------------------------
   TS_clk = PERIOD TIMEGRP "clk" 50 MHz HIGH | MINLOWPULSE |    15.000ns|     5.000ns|       0|           0
    50%                                      |             |            |            |        |
 ----------------------------------------------------------------------------------------------------------
-  TS_clk_wiz_clkout1 = PERIOD TIMEGRP "clk_ | SETUP       |    80.089ns|    19.911ns|       0|           0
-  wiz_clkout1" TS_clk * 0.2 HIGH 50%        | HOLD        |     0.304ns|            |       0|           0
+  TS_clk_wiz_clkout1 = PERIOD TIMEGRP "clk_ | SETUP       |    82.053ns|    17.947ns|       0|           0
+  wiz_clkout1" TS_clk * 0.2 HIGH 50%        | HOLD        |     0.336ns|            |       0|           0
                                             | MINPERIOD   |    50.000ns|    50.000ns|       0|           0
 ----------------------------------------------------------------------------------------------------------
 
@@ -3006,11 +3004,11 @@ Derived Constraints for TS_clk
 |           Constraint          | Requirement |-------------+-------------|-------------+-------------|-------------+-------------|
 |                               |             |   Direct    | Derivative  |   Direct    | Derivative  |   Direct    | Derivative  |
 +-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-|TS_clk                         |     20.000ns|      5.000ns|     19.745ns|            0|            0|            0|       225462|
-| TS_clk_wiz_clkout3            |     10.000ns|      9.286ns|          N/A|            0|            0|       110454|            0|
+|TS_clk                         |     20.000ns|      5.000ns|     19.105ns|            0|            0|            0|       228406|
+| TS_clk_wiz_clkout0            |     20.000ns|     19.105ns|          N/A|            0|            0|        35587|            0|
+| TS_clk_wiz_clkout2            |      4.000ns|      3.810ns|          N/A|            0|            0|         4695|            0|
+| TS_clk_wiz_clkout3            |     10.000ns|      9.376ns|          N/A|            0|            0|       110454|            0|
 | TS_clk_wiz_clkout1            |    100.000ns|     50.000ns|          N/A|            0|            0|        77670|            0|
-| TS_clk_wiz_clkout0            |     20.000ns|     19.240ns|          N/A|            0|            0|        32643|            0|
-| TS_clk_wiz_clkout2            |      4.000ns|      3.949ns|          N/A|            0|            0|         4695|            0|
 +-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
 
 All constraints were met.
@@ -3022,10 +3020,10 @@ All signals are completely routed.
 
 WARNING:Par:283 - There are 1 loadless signals in this design. This design will cause Bitgen to issue DRC warnings.
 
-Total REAL time to PAR completion: 19 secs
-Total CPU time to PAR completion (all processors): 25 secs
+Total REAL time to PAR completion: 20 secs
+Total CPU time to PAR completion (all processors): 26 secs
 
-Peak Memory Usage:  812 MB
+Peak Memory Usage:  814 MB
 
 Placer: Placement generated during map.
 Routing: Completed - No errors found.
@@ -3048,7 +3046,7 @@ Loading device for application Rf_Device from file '6slx9.nph' in environment
 /opt/Xilinx/14.7/ISE_DS/ISE/.
    "mojo_top_0" is an NCD, version 3.2, device xc6slx9, package tqg144, speed -2
 
-Analysis completed Sat Dec  9 22:40:41 2017
+Analysis completed Sun Dec 10 09:26:17 2017
 --------------------------------------------------------------------------------
 
 Generating Report ...
@@ -3074,20 +3072,20 @@ INFO:Bitgen:341 - This design is using one or more 9K Block RAMs (RAMB8BWER).
    9K Block RAM initialization data, both user defined and default, requires a
    special bit stream format.  For more information, please reference Xilinx
    Answer Record 39999.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net lpfInValid is sourced by a
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   life/life_logic/M_calcstate_q[2]_GND_27_o_Mux_222_o is sourced by a
    combinatorial pin. This is not good design practice. Use the CE pin to
    control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   life/life_logic/M_calcstate_q[2]_GND_27_o_Mux_220_o is sourced by a
+WARNING:PhysDesignRules:372 - Gated clock. Clock net lpfInValid is sourced by a
    combinatorial pin. This is not good design practice. Use the CE pin to
    control the loading of data into the flip-flop.
 WARNING:PhysDesignRules:2410 - This design is using one or more 9K Block RAMs
    (RAMB8BWER).  9K Block RAM initialization data, both user defined and
    default, may be incorrect and should not be used.  For more information,
    please reference Xilinx Answer Record 39999.
-[Sat Dec  9 22:41:06 2017] impl_1 finished
-wait_on_run: Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 317.676 ; gain = 0.000
-INFO: [Common 17-206] Exiting PlanAhead at Sat Dec  9 22:41:06 2017...
+[Sun Dec 10 09:26:43 2017] impl_1 finished
+wait_on_run: Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 321.676 ; gain = 0.000
+INFO: [Common 17-206] Exiting PlanAhead at Sun Dec 10 09:26:43 2017...
 INFO: [Common 17-83] Releasing license: PlanAhead
 
 Finished building project.

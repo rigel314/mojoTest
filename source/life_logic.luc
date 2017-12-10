@@ -144,6 +144,7 @@ module life_logic #(
         }
         if(calcCtr.q == 6) {
           cells.d[5] = dout;
+          calcCtr.d = 0;
           calcstate.d = calcstate.READ;
         }
         
@@ -172,6 +173,7 @@ module life_logic #(
         }
         if(calcCtr.q == 3) {
           cells.d[8] = dout;
+          calcCtr.d = 0;
           calcstate.d = calcstate.CALC;
         }
       
@@ -379,7 +381,7 @@ module life_logic #(
         if(prevBufSel.q != bufferSel.q) {
           calcstate.d = calcstate.LINEBEGIN;
         }
-        calcstate.d = calcstate.WAIT;
+        //calcstate.d = calcstate.WAIT;
     }
     buf1.addra = calcAddr;
     buf2.addra = calcAddr;
