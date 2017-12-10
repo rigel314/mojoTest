@@ -12,7 +12,8 @@
 
 module life #(
   CLK_FREQ = 50000000 : CLK_FREQ > 0, // clock frequency
-  FPS = 1
+  FPS = 1,
+  FPSMULT = 1
   )(
     input clk,  // clock
     input rst,   // reset
@@ -31,7 +32,7 @@ module life #(
     screenfifo fifo(.wr_clk(clk), .rd_clk(clk), .wr_en(wr_valid), .rd_en(rd_ready), .din(fifoIn));
     .clk(clk) {
       life_init life_init(#CLK_FREQ(CLK_FREQ), .wr_full(wr_full));
-      life_logic life_logic(#CLK_FREQ(CLK_FREQ), #FPS(FPS), .init_done(init_done), .wr_full(wr_full));
+      life_logic life_logic(#CLK_FREQ(CLK_FREQ), #FPS(FPS), #FPSMULT(FPSMULT), .init_done(init_done), .wr_full(wr_full));
       comm_PCD8544 comm_screen(.fifoOut(fifoOut), .rd_empty(rd_empty), .rd_valid(rd_valid));
     }
   }

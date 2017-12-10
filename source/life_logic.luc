@@ -15,7 +15,8 @@
 
 module life_logic #(
   CLK_FREQ = 50000000 : CLK_FREQ > 0, // clock frequency
-  FPS = 1
+  FPS = 1,
+  FPSMULT = 1
   )(
     input clk,  // clock
     input rst,  // reset
@@ -31,7 +32,7 @@ module life_logic #(
       dff bufferSel[2]; // Refers to the buffer currently being read&sent to fifo, 0 - calculation should wait; 1,2 - buf1/buf2
       dff prevBufSel[2];
       dff bufferSendCtr[9];
-      dff fpsCtr[$clog2(CLK_FREQ/FPS+1)];
+      dff fpsCtr[$clog2(CLK_FREQ/FPS*FPSMULT+1)];
       dff calcCtr[4];
       dff cells[9][8];
       dff calcRaddr[3][9];
@@ -178,10 +179,9 @@ module life_logic #(
         state[7:1] = 4;
         calcCtr.d = calcCtr.q + 1;
         cellCount = 0;
-        newCell = 0;
+        
         case(calcCtr.q) {
           0:
-            newCell = cells.q[4][0];
             if(cells.q[0][7])
               cellCount = cellCount + 1;
             if(cells.q[1][0])
@@ -200,7 +200,6 @@ module life_logic #(
               cellCount = cellCount + 1;
             
           1:
-            newCell = cells.q[4][1];
             if(cells.q[1][0])
               cellCount = cellCount + 1;
             if(cells.q[1][1])
@@ -219,7 +218,6 @@ module life_logic #(
               cellCount = cellCount + 1;
           
           2:
-            newCell = cells.q[4][2];
             if(cells.q[1][1])
               cellCount = cellCount + 1;
             if(cells.q[1][2])
@@ -238,7 +236,6 @@ module life_logic #(
               cellCount = cellCount + 1;
             
           3:
-            newCell = cells.q[4][3];
             if(cells.q[1][2])
               cellCount = cellCount + 1;
             if(cells.q[1][3])
@@ -257,7 +254,6 @@ module life_logic #(
               cellCount = cellCount + 1;
             
           4:
-            newCell = cells.q[4][4];
             if(cells.q[1][3])
               cellCount = cellCount + 1;
             if(cells.q[1][4])
@@ -276,7 +272,6 @@ module life_logic #(
               cellCount = cellCount + 1;
             
           5:
-            newCell = cells.q[4][5];
             if(cells.q[1][4])
               cellCount = cellCount + 1;
             if(cells.q[1][5])
@@ -295,7 +290,6 @@ module life_logic #(
               cellCount = cellCount + 1;
             
           6:
-            newCell = cells.q[4][6];
             if(cells.q[1][5])
               cellCount = cellCount + 1;
             if(cells.q[1][6])
@@ -314,7 +308,6 @@ module life_logic #(
               cellCount = cellCount + 1;
             
           7:
-            newCell = cells.q[4][7];
             if(cells.q[1][6])
               cellCount = cellCount + 1;
             if(cells.q[1][7])
@@ -338,6 +331,7 @@ module life_logic #(
             calcstate.d = calcstate.q;
         }
         
+        newCell = cells.q[4][calcCtr.q];
         if(cellCount < 2 || cellCount > 3)
           newCell = 0;
         if(cellCount == 3)
@@ -385,6 +379,7 @@ module life_logic #(
         if(prevBufSel.q != bufferSel.q) {
           calcstate.d = calcstate.LINEBEGIN;
         }
+        calcstate.d = calcstate.WAIT;
     }
     buf1.addra = calcAddr;
     buf2.addra = calcAddr;
@@ -418,7 +413,7 @@ module life_logic #(
         fpsCtr.d = 0;
         sendAddr = bufferSendCtr.q;
         if(bufferSendCtr.q < 504) {
-          buf1.web = 1;
+          buf1.web = 0;//1;
           buf1.dinb = 8h01;//bufferSendCtr.q[7:0];//8h01; // Initialize to all 8b00000001's for now
           buf2.web = 1;
           buf2.dinb = 8h82; // Initialize to all 8b00000001's for now
@@ -473,7 +468,6 @@ module life_logic #(
               sendstate.d = sendstate.FPS;
             }
             else {
-              state[0] = 1;
               bufferSendCtr.d = 505; // Should never happen because the calculation loop should be much faster than the serial comms
             }
           }
@@ -486,7 +480,8 @@ module life_logic #(
         
       sendstate.FPS:
         bufferSendCtr.d = 0;
-        if(fpsCtr.q == CLK_FREQ/FPS) {
+        state[0] = 1;
+        if(fpsCtr.q == CLK_FREQ/FPS*FPSMULT) {
           fpsCtr.d = 0;
           if(bufferSel.q == 1)
             bufferSel.d = 2;

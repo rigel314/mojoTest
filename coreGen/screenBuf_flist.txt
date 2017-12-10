@@ -45,6 +45,7 @@ screenBuf/simulation/timing/wave_mti.do
 screenBuf/simulation/timing/wave_ncsim.sv
 screenBuf.asy
 screenBuf.gise
+screenBuf.mif
 screenBuf.ngc
 screenBuf.v
 screenBuf.veo
